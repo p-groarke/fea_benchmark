@@ -1,7 +1,7 @@
 # cppBenchUtil
 Some benchmarks and benchmarking helper functions.
 
-##### Instructions
+### Instructions
 Simply include benchUtil.h in your program. It is a collection of functions inside `Bench` namespace.
 
 ```
@@ -21,7 +21,7 @@ Optional string
 Optional but really recommended string took: 0.000002s
 ```
 
-##### Compiling
+### Compiling
 Of course, use your compiler optimizations when testing performance.
 
 ###### Windows
