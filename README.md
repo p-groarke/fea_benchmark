@@ -5,6 +5,10 @@ Some benchmarks and benchmarking helper functions.
 Simply include benchUtil.h in your program. It is a collection of functions inside `Bench` namespace.
 
 ```
+#include "../benchUtil.h"
+
+[...]
+
 Bench::title("Your title");
 Bench::start("Optional string");
 // Do stuff
