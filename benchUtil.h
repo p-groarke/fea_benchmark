@@ -21,6 +21,6 @@ namespace Bench {
 	void end(const std::string& message = "") {
 		endTime = std::chrono::system_clock::now();
 		elapsedTime = endTime - startTime;
-		std::cout << message << " took: " << setiosflags(std::ios::fixed) << elapsedTime.count() << "s" << std::endl;
+		std::cout << message << " took: " << std::setiosflags(std::ios::fixed) << elapsedTime.count() << "s" << std::endl;
 	}
 };

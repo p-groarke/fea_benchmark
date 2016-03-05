@@ -51,7 +51,7 @@ double func(double n) {
 	return func(n - 1) + func(n - 2);
 }
 
-std::function<double(double)> funcValue = [&](double n) -> double {
+std::function<double(double)> funcValue = [](double n) -> double {
 	if (n < 2)
 		return n;
 	return funcValue(n - 1) + funcValue(n - 2);
@@ -91,11 +91,6 @@ int main (int argc, char** argv) {
 	Bench::start();
 	a->func(qty);
 	Bench::end("Virtual on pointer");
-
-	// a = (Base*)a;
-	// Bench::start();
-	// ((Base *)a)->func(qty);
-	// Bench::end("Virtual called on paren");
 
 #ifdef _MSC_VER
 	system("pause");
