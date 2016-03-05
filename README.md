@@ -18,7 +18,7 @@ outputs:
 Your title
 ----------
 Optional string
-Optional but really recommended string took: 0.000002s
+Optional but really recommended string took: 0.000000s
 ```
 
 ### Compiling
