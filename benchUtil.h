@@ -4,7 +4,7 @@
 #include <chrono>
 
 /*
-	escape(void*) and cobble() are from Chandler Carruth. More info:
+	escape(void*) and clobber() are from Chandler Carruth. More info:
 	https://www.youtube.com/watch?v=nXaxk27zwlk
 	Ty Chandler!
 */
