@@ -2,7 +2,22 @@
 
 #include "../benchUtil.h"
 
-int qty = 1000000;
+// Callback Pointer C
+// Struct operator() std::function (functor)
+// std::function with bind
+// std::function Reference
+//
+
+const long qty = 1000000000;
+
+class Tomate {
+public:
+	void Yay() {
+		std::cout << "uyay" << std::endl;
+	}
+	int fuckyou = 42;
+	double mangedlamarde = 56;
+};
 
 class Base {
 public:
@@ -98,12 +113,28 @@ int main(int argc, char** argv)
 	}
 	Bench::end("Virtual on object");
 
+	A* aRef = &aobj;
+	Bench::start();
+	for (int n = 0; n < qty; n++) {
+		aRef->func(qty);
+	}
+	Bench::end("Pointer on virtual on object");
+
+	A& aCast = *aRef;
+	Bench::start();
+	for (int n = 0; n < qty; n++) {
+		aCast.func(qty);
+	}
+	Bench::end("Reference on pointer on virtual on object");
+
 	A* a = new A();
 	Bench::start();
 	for (int n = 0; n < qty; n++) {
 		a->func(qty);
 	}
 	Bench::end("Virtual on pointer");
+
+	Tomate t;
 
 #ifdef _MSC_VER
 	system("pause");
