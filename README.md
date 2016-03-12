@@ -13,16 +13,24 @@ Bench::title("Your title");
 Bench::start("Optional string");
 // Do stuff
 Bench::end("Optional but really recommended string");
+
+Bench::start();
+// Do stuff
+Bench::end("Optional but really recommended string");
 ```
 
 outputs:
 
 ```
-----------
+##########
 Your title
-----------
+##########
+
+
 Optional string
-Optional but really recommended string took: 0.000000s
+---------------
+Optional but really recommended string                                0.000000s
+Optional but really recommended string                                0.000000s
 ```
 
 ### Compiling
