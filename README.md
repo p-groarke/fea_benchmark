@@ -12,10 +12,12 @@ Simply include benchUtil.h in your program. It is a collection of functions insi
 Bench::title("Your title");
 Bench::start("Optional string");
 // Do stuff
+Bench::clobber();
 Bench::end("Optional but really recommended string");
 
 Bench::start();
 // Do stuff
+Bench::clobber();
 Bench::end("Optional but really recommended string");
 ```
 
