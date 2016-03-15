@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -43,7 +45,11 @@ namespace Bench {
 	Usage: Pass the pointer to an allocated object you want to benchmark.
 	*/
 	static void escape(void *p) {
+#ifdef _MSC_VER
+		_WriteBarrier();
+#else
 		asm volatile("" : : "g"(p) : "memory");
+#endif
 	}
 
 	/*
@@ -53,6 +59,10 @@ namespace Bench {
 	Usage: Use after a call, to make sure the compiler doesn't remove the call.
 	*/
 	static void clobber() {
+#ifdef _MSC_VER
+		_ReadBarrier();
+#else
 		asm volatile("" : : : "memory");
+#endif
 	}
 };
