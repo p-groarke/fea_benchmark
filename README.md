@@ -59,10 +59,10 @@ In most cases, you want to inspect various program attributes to understand the 
 
 ###### OS X
 - Generate assembly
-  - `clang++ -S -mllvm --x86-asm-syntax=intel main.cpp`
-  - `clang++ -S -masm=intel main.cpp` (Clang 3.5+)
+  - `clang++ -S -std=c++11 -stdlib=libc++ -mllvm --x86-asm-syntax=intel main.cpp`
+  - `clang++ -S -std=c++11 -stdlib=libc++ -masm=intel main.cpp` (Clang 3.5+)
 - Vtable layout
-  - `clang++ -cc1 -fdump-record-layouts main.cpp`
+  - `clang++ -cc1 -std=c++11 -stdlib=libc++ -fdump-record-layouts main.cpp`
 - Memory layout (vtable + objects)
   - `clang++ -std=c++11 -stdlib=libc++ -Xclang -fdump-record-layouts -fsyntax-only main.cpp`
 - Vtable with LLVM IR
