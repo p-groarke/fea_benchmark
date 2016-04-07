@@ -84,6 +84,14 @@ int main(int argc, char** argv)
 	}
 	Bench::end("C callback function");
 
+	double (Normal::*cpp_callback)(double) = &Normal::func;
+	Bench::start();
+	for (int n = 0; n < qty; n++) {
+		(normal_object.*cpp_callback)(data);
+		Bench::clobber();
+	}
+	Bench::end("C++ callback function");
+
 
 	auto lambda = [](double n) { return n * 2; };
 	Bench::start("C++ functional");
