@@ -67,6 +67,8 @@ In most cases, you want to inspect various program attributes to understand the 
   - `clang++ -std=c++11 -stdlib=libc++ -Xclang -fdump-record-layouts -fsyntax-only main.cpp`
 - Vtable with LLVM IR
   - `clang++ -std=c++11 -stdlib=libc++ -Xclang -fdump-record-layouts main.cpp`
+- Dissasembly
+  - `otool -tv a.out`
 
 [More clang commands](http://clang.llvm.org/docs/CommandGuide/clang.html)
 
@@ -76,6 +78,8 @@ In most cases, you want to inspect various program attributes to understand the 
   - `g++ -Wa,-adhln -g main.cpp` (Assembly + Source)
 - Vtable layout
   - `g++ -fdump-class-hierarchy main.cpp`
+- Dissasembly
+  - `objdump -d a.out`
 
 ### Tools
 In no specific order, various tools to profile results.
