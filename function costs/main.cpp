@@ -36,6 +36,20 @@ double Normal::func(double n)
 	return n * 2;
 }
 
+class IAbstract {
+public:
+	virtual double func(double n) = 0;
+};
+
+class NotAbstract : public IAbstract {
+public:
+	double func(double n);
+};
+
+double NotAbstract::func(double n) {
+	return n * 2;
+}
+
 struct Functor {
 	double operator()(double n) {
 		return n * 2;
@@ -120,12 +134,12 @@ int main(int argc, char** argv)
 	std::function<double(Normal&, double)> member_func = &Normal::func;
 	Bench::start();
 	for (int n = 0; n < qty; n++) {
-		member_func(normal_object, 4.2);
+		member_func(normal_object, data);
 		Bench::clobber();
 	}
 	Bench::end("Stored member function in std::function");
 
-	std::function<double()> bind_func = std::bind(func, 4.2);
+	std::function<double()> bind_func = std::bind(func, data);
 	Bench::start();
 	for (int n = 0; n < qty; n++) {
 		bind_func();
@@ -137,7 +151,7 @@ int main(int argc, char** argv)
 			std::bind(&Normal::func, normal_object, _1);
 	Bench::start();
 	for (int n = 0; n < qty; n++) {
-		member_and_object(4.2);
+		member_and_object(data);
 		Bench::clobber();
 	}
 	Bench::end("Member and object stored in std::function with std::bind");
@@ -146,7 +160,7 @@ int main(int argc, char** argv)
 			std::bind(&Normal::func, &normal_object, _1);
 	Bench::start();
 	for (int n = 0; n < qty; n++) {
-		member_and_pointer(4.2);
+		member_and_pointer(data);
 		Bench::clobber();
 	}
 	Bench::end("Member and pointer stored in std::function with std::bind");
@@ -154,7 +168,7 @@ int main(int argc, char** argv)
 	std::function<double(double)> functor_func = Functor();
 	Bench::start();
 	for (int n = 0; n < qty; n++) {
-		functor_func(4.2);
+		functor_func(data);
 		Bench::clobber();
 	}
 	Bench::end("Functor stored in std::function");
@@ -207,6 +221,21 @@ int main(int argc, char** argv)
 	}
 	Bench::end("Pointer virtual member function");
 
+	NotAbstract b;
+	Bench::start();
+	for (int n = 0; n < qty; n++) {
+		b.func(data);
+		Bench::clobber();
+	}
+	Bench::end("Abstract inherited Object");
+
+	NotAbstract* c = new NotAbstract();
+	Bench::start();
+	for (int n = 0; n < qty; n++) {
+		c->func(data);
+		Bench::clobber();
+	}
+	Bench::end("Abstract inherited Poiner");
 #ifdef _MSC_VER
 	system("pause");
 #endif
