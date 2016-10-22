@@ -1,7 +1,7 @@
 # cpp_bench_util
 Some benchmarks and benchmarking helper functions.
 
-### Instructions
+## Instructions
 Simply include bench_util.h in your program. It is a collection of functions inside `bench` namespace.
 
 ### Cmake
@@ -14,6 +14,7 @@ make
 make install
 ```
 
+### Usage
 ```
 #include "../bench_util.h"
 
