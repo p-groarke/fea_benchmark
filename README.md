@@ -2,7 +2,17 @@
 Some benchmarks and benchmarking helper functions.
 
 ### Instructions
-Simply include benchUtil.h in your program. It is a collection of functions inside `Bench` namespace.
+Simply include bench_util.h in your program. It is a collection of functions inside `bench` namespace.
+
+### Cmake
+You can build all examples and install the header in your user include path easily.
+```
+mkdir build
+cd build
+cmake ..
+make
+make install
+```
 
 ```
 #include "../bench_util.h"
