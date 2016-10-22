@@ -1,24 +1,24 @@
-# cppBenchUtil
+# cpp_bench_util
 Some benchmarks and benchmarking helper functions.
 
 ### Instructions
 Simply include benchUtil.h in your program. It is a collection of functions inside `Bench` namespace.
 
 ```
-#include "../benchUtil.h"
+#include "../bench_util.h"
 
 [...]
 
-Bench::title("Your title");
-Bench::start("Optional string");
+bench::title("Your title");
+bench::start("Optional string");
 // Do stuff
-Bench::clobber();
-Bench::end("Optional but really recommended string");
+bench::clobber();
+bench::end("Optional but really recommended string");
 
-Bench::start();
+bench::start();
 // Do stuff
-Bench::clobber();
-Bench::end("Optional but really recommended string");
+bench::clobber();
+bench::end("Optional but really recommended string");
 ```
 
 outputs:
