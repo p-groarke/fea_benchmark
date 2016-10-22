@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <vector>
 
-#include "../benchUtil.h"
+#include "../../bench_util.h"
 
 /*interface*/ struct IPotato {
 	void* potato;
@@ -38,17 +38,17 @@ int main (int argc, char** argv) {
 	IPotato ip;
 	ip.update = (int (*)(void*))p_vtable[0][0];
 
-//	Bench::start();
+//	bench::start();
 //	for (int i = 0; i < qty; ++i) {
 //		it->update();
 //	}
-//	Bench::end("vtable");
+//	bench::end("vtable");
 //
-//	Bench::start();
+//	bench::start();
 //	for (int i = 0; i < qty; ++i) {
 //		ip.update(p);
 //	}
-//	Bench::end("struct with C callback");
+//	bench::end("struct with C callback");
 
 	for (int i = 0; i < tom_vec.size(); ++i) {
 		tom_vec[i] = new Tomato();
@@ -63,17 +63,17 @@ int main (int argc, char** argv) {
 	int tomato_result = 0;
 	int potato_result = 0;
 
-	Bench::start();
+	bench::start();
 	for (const auto& x : tom_vec) {
 		tomato_result += x->update();
 	}
-	Bench::end("vtable");
+	bench::end("vtable");
 
-	Bench::start();
+	bench::start();
 	for (const auto& x : pot_vec) {
 		potato_result += x.update(x.potato);
 	}
-	Bench::end("struct");
+	bench::end("struct");
 
 	printf("Use values %d %d \n", tomato_result, potato_result);
 //	printf("Use values %d %d \n", ((Tomato*)it)->test, p->test);

@@ -1,4 +1,4 @@
-#include "../benchUtil.h"
+#include "../../bench_util.h"
 #include <unistd.h>
 #include <cstdlib>
 #include <cstdio>
@@ -70,10 +70,10 @@ int itostr(int value, char* str_buffer) {
 		*(str_buffer) = ' ';
 		return 2;
 	}
-	
+
 	int sign = -(value < 0);
 	unsigned int val = (value ^ sign) - sign;
-	
+
 	int size;
 	if (val >= 10000) {
 		if (val >= 10000000) {
@@ -105,31 +105,31 @@ int itostr(int value, char* str_buffer) {
 		}
 	}
 	size -= sign;
-	
+
 	char* c = str_buffer;
 	*(c + size) = ' ';
 	if (sign) *c = '-';
-	
+
 	c += size - 1;
-	
+
 	while (val >= 100) {
 		// int pos = val % 100;
 		int pos = (int)remu100(val);
-		
+
 		//    val /= 100;
 		val = divu100(val);
 		//*(short*)(c - 1) = *(short*)(digit_pairs + 2 * pos);
 		*(short*)(c - 1) = *(short*)(digit_pairs + mul2(pos));
 		c -= 2;
 	}
-	
+
 	while (val > 0) {
 		//*c-- = '0' + (val % 10);
 		// val /= 10;
 		*c-- = '0' + remu10(val);
 		val = divu10(val);
 	}
-	
+
 	return ++size;
 }
 
@@ -139,7 +139,7 @@ int itostr(unsigned int val, char* str_buffer) {
 		*(str_buffer) = ' ';
 		return 2;
 	}
-	
+
 	int size;
 	if (val >= 10000) {
 		if (val >= 10000000) {
@@ -170,27 +170,27 @@ int itostr(unsigned int val, char* str_buffer) {
 				size = 1;
 		}
 	}
-	
+
 	//	s.resize(size);
-	
+
 	//	char* c = &s[size-1];
 	*(str_buffer + size) = ' ';
 	char* c = str_buffer + size - 1;
-	
+
 	while (val >= 100) {
 		int pos = val % 100;
 		val /= 100;
 		*(short*)(c - 1) = *(short*)(digit_pairs + 2 * pos);
 		c -= 2;
 	}
-	
+
 	while (val > 0) {
 		//		*c--='0' + (val % 10);
 		*c-- = '0' + remu10(val);
 		//		val /= 10;
 		val = divu10(val);
 	}
-	
+
 	return ++size;
 }
 
@@ -251,76 +251,76 @@ inline void Print(T t, P... p) {
 
 
 int main (int argc, char** argv) {
-	Bench::title("Fast print");
-	
+	bench::title("Fast print");
+
 	const int qty = 100000;
-	
-	Bench::start();
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		Print("Mother", 100, "fucker", (unsigned int) 200);
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("Fast print");
-	
-	Bench::start();
+	bench::end("Fast print");
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		std::cerr << "Mother " << 100 << " fucker " << (unsigned int) 200 << std::endl;
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("std::cout");
-	
-	Bench::start();
+	bench::end("std::cout");
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		fprintf(stderr, "%s %d %s %u\n", "Mother", 100, "fucker", (unsigned int) 200);
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("printf");
-	
+	bench::end("printf");
+
 	//
-	
-	Bench::start("Second try.");
+
+	bench::start("Second try.");
 	for (int i = 0; i < qty; ++i) {
 		std::cerr << "Mother " << 100 << " fucker " << (unsigned int) 200 << std::endl;
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("std::cout");
-	
-	Bench::start();
+	bench::end("std::cout");
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		fprintf(stderr, "%s %d %s %u\n", "Mother", 100, "fucker", (unsigned int) 200);
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("printf");
-	
-	Bench::start();
+	bench::end("printf");
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		Print("Mother", 100, "fucker", (unsigned int) 200);
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("Fast print");
-	
+	bench::end("Fast print");
+
 	//
-	
-	Bench::start("Third try.");
+
+	bench::start("Third try.");
 	for (int i = 0; i < qty; ++i) {
 		fprintf(stderr, "%s %d %s %u\n", "Mother", 100, "fucker", (unsigned int) 200);
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("printf");
-	
-	Bench::start();
+	bench::end("printf");
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		Print("Mother", 100, "fucker", (unsigned int) 200);
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("Fast print");
-	
-	Bench::start();
+	bench::end("Fast print");
+
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		std::cerr << "Mother " << 100 << " fucker " << (unsigned int) 200 << std::endl;
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("std::cout");
-	
+	bench::end("std::cout");
+
 	return 0;
 }

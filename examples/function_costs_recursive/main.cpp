@@ -1,6 +1,6 @@
 #include <functional>
 
-#include "../benchUtil.h"
+#include "../../bench_util.h"
 
 int qty = 50;
 
@@ -58,39 +58,39 @@ std::function<double(double)> funcValue = [](double n) -> double {
 };
 
 int main (int argc, char** argv) {
-	Bench::title("Comparing different ways to call methods and functions.");
+	bench::title("Comparing different ways to call methods and functions.");
 
-	Bench::start();
+	bench::start();
 	func(qty);
-	Bench::end("Completely normal function call");
+	bench::end("Completely normal function call");
 
-	Bench::start();
+	bench::start();
 	funcInline(qty);
-	Bench::end("Inline function call");
+	bench::end("Inline function call");
 
-	Bench::start();
+	bench::start();
 	funcValue(qty);
-	Bench::end("std::function and lambda");
+	bench::end("std::function and lambda");
 
 	Normal obj;
-	Bench::start();
+	bench::start();
 	obj.func(qty);
-	Bench::end("Function called from an object");
+	bench::end("Function called from an object");
 
 	Normal* p = new Normal();
-	Bench::start();
+	bench::start();
 	p->func(qty);
-	Bench::end("Function called from a pointer");
+	bench::end("Function called from a pointer");
 
 	A aobj;
-	Bench::start();
+	bench::start();
 	aobj.func(qty);
-	Bench::end("Virtual on object");
+	bench::end("Virtual on object");
 
 	A* a = new A();
-	Bench::start();
+	bench::start();
 	a->func(qty);
-	Bench::end("Virtual on pointer");
+	bench::end("Virtual on pointer");
 
 #ifdef _MSC_VER
 	system("pause");

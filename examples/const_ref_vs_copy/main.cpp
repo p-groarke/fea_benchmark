@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "benchUtil.h"
+#include "../../bench_util.h"
 
 double constFib(const double& n) {
 	if (n < 2)
@@ -15,15 +15,15 @@ double copyFib(double n) {
 }
 
 int main(int argc, char** argv) {
-	Bench::title("const reference VS. copy -- using doubles");
+	bench::title("const reference VS. copy -- using doubles");
 
-	Bench::start();
+	bench::start();
 	std::cout << "Fib = " << constFib(42) << std::endl;
-	Bench::end("const double&");
+	bench::end("const double&");
 
-	Bench::start();
+	bench::start();
 	std::cout << "Fib = " << copyFib(42) << std::endl;
-	Bench::end("copy");
+	bench::end("copy");
 
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include "../benchUtil.h"
+#include "../../bench_util.h"
 
 struct NotPacked {
 	char c = 'c';
@@ -25,11 +25,11 @@ int main (int argc, char** argv)
 	Packed pack;
 	NotPacked npack;
 
-	Bench::title("Iterating over packed data vs non-packed.");
+	bench::title("Iterating over packed data vs non-packed.");
 	printf("%d iterations. Packed size : %d bytes, Non-packed size : %d bytes\n",
 			qty, sizeof(Packed), sizeof(NotPacked));
 
-	Bench::start();
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		temp += npack.c;
 		temp += npack.l;
@@ -37,11 +37,11 @@ int main (int argc, char** argv)
 		temp += npack.b;
 		temp += npack.i;
 		temp += npack.d;
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("Non-Packed Data");
+	bench::end("Non-Packed Data");
 
-	Bench::start();
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		temp += pack.c;
 		temp += pack.l;
@@ -49,9 +49,9 @@ int main (int argc, char** argv)
 		temp += pack.b;
 		temp += pack.i;
 		temp += pack.d;
-		Bench::clobber();
+		bench::clobber();
 	}
-	Bench::end("Packed Data");
+	bench::end("Packed Data");
 
 	printf("%d", temp);
 	return 0;

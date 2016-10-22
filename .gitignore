@@ -33,3 +33,5 @@
 # Profiling artifacts.
 *.txt
 *.s
+
+/build*

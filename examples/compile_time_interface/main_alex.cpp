@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../benchUtil.h"
+#include "../../bench_util.h"
 
 class StructImplement;
 
@@ -74,17 +74,17 @@ int main(int argc, const char* argv[])
 
 	const int N_TIMES = 1000000000;
 
-	Bench::start("");
+	bench::start("");
 	for (int i = 0; i < N_TIMES; i++) {
 		my_struct.OnUpdate(&my_struct);
 	}
-	Bench::end("struct of C pointer");
+	bench::end("struct of C pointer");
 
-	Bench::start("");
+	bench::start("");
 	for (int i = 0; i < N_TIMES; i++) {
 		tomato->OnUpdate();
 	}
-	Bench::end("vtable");
+	bench::end("vtable");
 
 	std::cout << my_struct._sum << std::endl;
 	std::cout << tomato->_sum << std::endl;

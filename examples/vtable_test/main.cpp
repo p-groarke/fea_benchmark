@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "../benchUtil.h"
+#include "../../bench_util.h"
 
 class IPotato {
 public:
@@ -36,23 +36,23 @@ int main (int argc, char** argv) {
 
 
 	IPotato* ip = new Potato();
-	Bench::start();
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		ip->update(/*adder*/);
 	}
-	Bench::end("Abstract pointer");
+	bench::end("Abstract pointer");
 
 	NormalClass* n = new NormalClass();
-	Bench::start();
+	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		n->update(/*adder*/);
 	}
-	Bench::end("Normal pointer");
+	bench::end("Normal pointer");
 
 	printf("Lets use the results %d %d\n", ((Potato*)ip)->test, n->test);
 	//IPotato* ip = new Potato();
 	//ip->update();
-	//Bench::clobber();
+	//bench::clobber();
 	//Potato p;
 	//p.update();
 	//NormalClass n;
