@@ -31,7 +31,6 @@
 .DS_Store
 
 # Profiling artifacts.
-*.txt
 *.s
 
 /build*
