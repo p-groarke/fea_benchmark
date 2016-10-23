@@ -3,6 +3,7 @@ project(bench_util)
 
 file(GLOB SRC ${PROJECT_SOURCE_DIR}/bench_util.h)
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "-O3")
 install(FILES ${SRC} DESTINATION /usr/local/include/bench_util/)
 
 # Examples
