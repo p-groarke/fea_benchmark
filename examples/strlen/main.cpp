@@ -6,6 +6,18 @@
 	#include <intrin.h> // Valid for >= 1300. Older VS not supported in fst.
 #endif
 
+// Test alex's
+// #define haszero(v) (((v) - 0x01010101UL) & ~(v) & 0x80808080UL)
+
+// __attribute__((__always_inline__)) size_t alex_strlen2(const char *s) {
+// 	size_t* i = static_cast<size_t*>((void*)(s));
+// 	while(!(word_has_zero_byte(*i++)));
+// 	if(!(*(--i) & 0xFF000000)) { return (((char*)(i)) - 9) - s; }
+// 	else if(!(*i & 0xFF0000)) { return (((char*)i) - 10) - s; }
+// 	else if(!(*i & 0xFF00)) { return (((char*)i) - 11) - s; }
+// 	else { return (((char*)i) - 12) - s; }
+// }
+
 size_t basic_strlen(const char *s) {
     const char *start = s;
     while(*s)
@@ -63,7 +75,6 @@ std::size_t simd_strlen(const char* str)
 	}
 
 	/* Search for 0. */
-	mask = 0;
 	for (;;) {
 		xmm1 = _mm_load_si128((const __m128i*)str);
 		xmm1 = _mm_cmpeq_epi8(xmm1, xmm0);
@@ -75,7 +86,6 @@ std::size_t simd_strlen(const char* str)
 			break;
 		}
 		str += sizeof(__m128i);
-		// len += sizeof(__m128i);
 	}
 	return len;
 }
