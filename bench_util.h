@@ -44,7 +44,6 @@
 
 namespace bench {
 	static std::chrono::time_point<std::chrono::system_clock> start_time, end_time;
-	static std::chrono::duration<double> elapsed_time;
 
 	static inline void title(const char* message) {
 		printf("%.*s\n", (int)strlen(message),
@@ -70,7 +69,7 @@ namespace bench {
 
 	static inline void stop(const char* message = "") {
 		end_time = std::chrono::system_clock::now();
-		elapsed_time = end_time - start_time;
+		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
 		printf("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
 	}
@@ -83,7 +82,7 @@ namespace bench {
 	 *
 	 * Usage: Pass the pointer to an allocated object you want to benchmark.
 	 */
-	static void escape(void *p) {
+	static inline void escape(void *p) {
 #ifdef _MSC_VER
 		_WriteBarrier();
 #else
@@ -97,7 +96,7 @@ namespace bench {
 	 *
 	 * Usage: Use after a call, to make sure the compiler doesn't remove the call.
 	 */
-	static void clobber() {
+	static inline void clobber() {
 #ifdef _MSC_VER
 		_ReadBarrier();
 #else
