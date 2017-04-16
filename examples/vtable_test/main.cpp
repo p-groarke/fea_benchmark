@@ -40,14 +40,14 @@ int main (int argc, char** argv) {
 	for (int i = 0; i < qty; ++i) {
 		ip->update(/*adder*/);
 	}
-	bench::end("Abstract pointer");
+	bench::stop("Abstract pointer");
 
 	NormalClass* n = new NormalClass();
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		n->update(/*adder*/);
 	}
-	bench::end("Normal pointer");
+	bench::stop("Normal pointer");
 
 	printf("Lets use the results %d %d\n", ((Potato*)ip)->test, n->test);
 	//IPotato* ip = new Potato();

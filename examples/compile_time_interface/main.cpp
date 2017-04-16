@@ -42,13 +42,13 @@ int main (int argc, char** argv) {
 //	for (int i = 0; i < qty; ++i) {
 //		it->update();
 //	}
-//	bench::end("vtable");
+//	bench::stop("vtable");
 //
 //	bench::start();
 //	for (int i = 0; i < qty; ++i) {
 //		ip.update(p);
 //	}
-//	bench::end("struct with C callback");
+//	bench::stop("struct with C callback");
 
 	for (int i = 0; i < tom_vec.size(); ++i) {
 		tom_vec[i] = new Tomato();
@@ -67,13 +67,13 @@ int main (int argc, char** argv) {
 	for (const auto& x : tom_vec) {
 		tomato_result += x->update();
 	}
-	bench::end("vtable");
+	bench::stop("vtable");
 
 	bench::start();
 	for (const auto& x : pot_vec) {
 		potato_result += x.update(x.potato);
 	}
-	bench::end("struct");
+	bench::stop("struct");
 
 	printf("Use values %d %d \n", tomato_result, potato_result);
 //	printf("Use values %d %d \n", ((Tomato*)it)->test, p->test);

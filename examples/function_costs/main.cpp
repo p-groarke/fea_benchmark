@@ -81,14 +81,14 @@ int main(int argc, char** argv)
 		func(data);
 		bench::clobber();
 	}
-	bench::end("Normal function");
+	bench::stop("Normal function");
 
 	bench::start();
 	for (int n = 0; n < qty; n++) {
 		func_inline(data);
 		bench::clobber();
 	}
-	bench::end("Inline function");
+	bench::stop("Inline function");
 
 	double (*c_callback)(double n) = func;
 	bench::start();
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
 		c_callback(data);
 		bench::clobber();
 	}
-	bench::end("C callback function");
+	bench::stop("C callback function");
 
 	double (Normal::*cpp_callback)(double) = &Normal::func;
 	bench::start();
@@ -104,7 +104,7 @@ int main(int argc, char** argv)
 		(normal_object.*cpp_callback)(data);
 		bench::clobber();
 	}
-	bench::end("C++ callback function");
+	bench::stop("C++ callback function");
 
 
 	auto lambda = [](double n) { return n * 2; };
@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 		lambda(data);
 		bench::clobber();
 	}
-	bench::end("Lambda");
+	bench::stop("Lambda");
 
 	std::function<double(double)> free_func = func;
 	bench::start();
@@ -121,7 +121,7 @@ int main(int argc, char** argv)
 		free_func(data);
 		bench::clobber();
 	}
-	bench::end("Free function stored in std::function");
+	bench::stop("Free function stored in std::function");
 
 	std::function<double(double)> lambda_func = [](double n) { return n * 2.0; };
 	bench::start();
@@ -129,7 +129,7 @@ int main(int argc, char** argv)
 		lambda_func(data);
 		bench::clobber();
 	}
-	bench::end("Lambda stored in std::function");
+	bench::stop("Lambda stored in std::function");
 
 	std::function<double(Normal&, double)> member_func = &Normal::func;
 	bench::start();
@@ -137,7 +137,7 @@ int main(int argc, char** argv)
 		member_func(normal_object, data);
 		bench::clobber();
 	}
-	bench::end("Stored member function in std::function");
+	bench::stop("Stored member function in std::function");
 
 	std::function<double()> bind_func = std::bind(func, data);
 	bench::start();
@@ -145,7 +145,7 @@ int main(int argc, char** argv)
 		bind_func();
 		bench::clobber();
 	}
-	bench::end("Parameters stored in std::function with std::bind");
+	bench::stop("Parameters stored in std::function with std::bind");
 
 	std::function<double(double)> member_and_object =
 			std::bind(&Normal::func, normal_object, _1);
@@ -154,7 +154,7 @@ int main(int argc, char** argv)
 		member_and_object(data);
 		bench::clobber();
 	}
-	bench::end("Member and object stored in std::function with std::bind");
+	bench::stop("Member and object stored in std::function with std::bind");
 
 	std::function<double(double)> member_and_pointer =
 			std::bind(&Normal::func, &normal_object, _1);
@@ -163,7 +163,7 @@ int main(int argc, char** argv)
 		member_and_pointer(data);
 		bench::clobber();
 	}
-	bench::end("Member and pointer stored in std::function with std::bind");
+	bench::stop("Member and pointer stored in std::function with std::bind");
 
 	std::function<double(double)> functor_func = Functor();
 	bench::start();
@@ -171,7 +171,7 @@ int main(int argc, char** argv)
 		functor_func(data);
 		bench::clobber();
 	}
-	bench::end("Functor stored in std::function");
+	bench::stop("Functor stored in std::function");
 
 
 	bench::start("Object-oriented");
@@ -179,7 +179,7 @@ int main(int argc, char** argv)
 		normal_object.func(data);
 		bench::clobber();
 	}
-	bench::end("Object member function");
+	bench::stop("Object member function");
 
 	Normal* p = new Normal();
 	bench::start();
@@ -187,7 +187,7 @@ int main(int argc, char** argv)
 		p->func(data);
 		bench::clobber();
 	}
-	bench::end("Pointer member function");
+	bench::stop("Pointer member function");
 
 	A aobj;
 	bench::start();
@@ -195,7 +195,7 @@ int main(int argc, char** argv)
 		aobj.func(data);
 		bench::clobber();
 	}
-	bench::end("Object virtual member function");
+	bench::stop("Object virtual member function");
 
 	A* aRef = &aobj;
 	bench::start();
@@ -203,7 +203,7 @@ int main(int argc, char** argv)
 		aRef->func(data);
 		bench::clobber();
 	}
-	bench::end("Object reference virtual member function");
+	bench::stop("Object reference virtual member function");
 
 	// A& aCast = *aRef;
 	// bench::start();
@@ -211,7 +211,7 @@ int main(int argc, char** argv)
 	// 	aCast.func(data);
 	// 	bench::clobber();
 	// }
-	// bench::end("Reference on pointer on virtual on object");
+	// bench::stop("Reference on pointer on virtual on object");
 
 	A* a = new A();
 	bench::start();
@@ -219,7 +219,7 @@ int main(int argc, char** argv)
 		a->func(data);
 		bench::clobber();
 	}
-	bench::end("Pointer virtual member function");
+	bench::stop("Pointer virtual member function");
 
 	NotAbstract b;
 	bench::start();
@@ -227,7 +227,7 @@ int main(int argc, char** argv)
 		b.func(data);
 		bench::clobber();
 	}
-	bench::end("Abstract inherited Object");
+	bench::stop("Abstract inherited Object");
 
 	NotAbstract* c = new NotAbstract();
 	bench::start();
@@ -235,7 +235,7 @@ int main(int argc, char** argv)
 		c->func(data);
 		bench::clobber();
 	}
-	bench::end("Abstract inherited Poiner");
+	bench::stop("Abstract inherited Poiner");
 #ifdef _MSC_VER
 	system("pause");
 #endif

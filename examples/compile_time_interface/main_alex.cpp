@@ -78,13 +78,13 @@ int main(int argc, const char* argv[])
 	for (int i = 0; i < N_TIMES; i++) {
 		my_struct.OnUpdate(&my_struct);
 	}
-	bench::end("struct of C pointer");
+	bench::stop("struct of C pointer");
 
 	bench::start("");
 	for (int i = 0; i < N_TIMES; i++) {
 		tomato->OnUpdate();
 	}
-	bench::end("vtable");
+	bench::stop("vtable");
 
 	std::cout << my_struct._sum << std::endl;
 	std::cout << tomato->_sum << std::endl;

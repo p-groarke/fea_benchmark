@@ -62,35 +62,35 @@ int main (int argc, char** argv) {
 
 	bench::start();
 	func(qty);
-	bench::end("Completely normal function call");
+	bench::stop("Completely normal function call");
 
 	bench::start();
 	funcInline(qty);
-	bench::end("Inline function call");
+	bench::stop("Inline function call");
 
 	bench::start();
 	funcValue(qty);
-	bench::end("std::function and lambda");
+	bench::stop("std::function and lambda");
 
 	Normal obj;
 	bench::start();
 	obj.func(qty);
-	bench::end("Function called from an object");
+	bench::stop("Function called from an object");
 
 	Normal* p = new Normal();
 	bench::start();
 	p->func(qty);
-	bench::end("Function called from a pointer");
+	bench::stop("Function called from a pointer");
 
 	A aobj;
 	bench::start();
 	aobj.func(qty);
-	bench::end("Virtual on object");
+	bench::stop("Virtual on object");
 
 	A* a = new A();
 	bench::start();
 	a->func(qty);
-	bench::end("Virtual on pointer");
+	bench::stop("Virtual on pointer");
 
 #ifdef _MSC_VER
 	system("pause");

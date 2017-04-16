@@ -260,21 +260,21 @@ int main (int argc, char** argv) {
 		Print("Mother", 100, "fucker", (unsigned int) 200);
 		bench::clobber();
 	}
-	bench::end("Fast print");
+	bench::stop("Fast print");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		std::cerr << "Mother " << 100 << " fucker " << (unsigned int) 200 << std::endl;
 		bench::clobber();
 	}
-	bench::end("std::cout");
+	bench::stop("std::cout");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		fprintf(stderr, "%s %d %s %u\n", "Mother", 100, "fucker", (unsigned int) 200);
 		bench::clobber();
 	}
-	bench::end("printf");
+	bench::stop("printf");
 
 	//
 
@@ -283,21 +283,21 @@ int main (int argc, char** argv) {
 		std::cerr << "Mother " << 100 << " fucker " << (unsigned int) 200 << std::endl;
 		bench::clobber();
 	}
-	bench::end("std::cout");
+	bench::stop("std::cout");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		fprintf(stderr, "%s %d %s %u\n", "Mother", 100, "fucker", (unsigned int) 200);
 		bench::clobber();
 	}
-	bench::end("printf");
+	bench::stop("printf");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		Print("Mother", 100, "fucker", (unsigned int) 200);
 		bench::clobber();
 	}
-	bench::end("Fast print");
+	bench::stop("Fast print");
 
 	//
 
@@ -306,21 +306,21 @@ int main (int argc, char** argv) {
 		fprintf(stderr, "%s %d %s %u\n", "Mother", 100, "fucker", (unsigned int) 200);
 		bench::clobber();
 	}
-	bench::end("printf");
+	bench::stop("printf");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		Print("Mother", 100, "fucker", (unsigned int) 200);
 		bench::clobber();
 	}
-	bench::end("Fast print");
+	bench::stop("Fast print");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
 		std::cerr << "Mother " << 100 << " fucker " << (unsigned int) 200 << std::endl;
 		bench::clobber();
 	}
-	bench::end("std::cout");
+	bench::stop("std::cout");
 
 	return 0;
 }

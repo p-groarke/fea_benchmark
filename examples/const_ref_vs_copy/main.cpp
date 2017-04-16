@@ -19,11 +19,11 @@ int main(int argc, char** argv) {
 
 	bench::start();
 	std::cout << "Fib = " << constFib(42) << std::endl;
-	bench::end("const double&");
+	bench::stop("const double&");
 
 	bench::start();
 	std::cout << "Fib = " << copyFib(42) << std::endl;
-	bench::end("copy");
+	bench::stop("copy");
 
 	return 0;
 }

@@ -39,7 +39,7 @@ int main (int argc, char** argv)
 		temp += npack.d;
 		bench::clobber();
 	}
-	bench::end("Non-Packed Data");
+	bench::stop("Non-Packed Data");
 
 	bench::start();
 	for (int i = 0; i < qty; ++i) {
@@ -51,7 +51,7 @@ int main (int argc, char** argv)
 		temp += pack.d;
 		bench::clobber();
 	}
-	bench::end("Packed Data");
+	bench::stop("Packed Data");
 
 	printf("%d", temp);
 	return 0;

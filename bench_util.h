@@ -29,44 +29,53 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #pragma once
+#include <chrono>
+#include <cstdio>
+#include <cstring>
 
-#include <iomanip>
+/* Deprecated */
 #include <iostream>
 #include <string>
-#include <chrono>
 
 /**
  * escape(void*) and clobber() are from Chandler Carruth. More info:
  * https://www.youtube.com/watch?v=nXaxk27zwlk
- * Ty Chandler!
  */
 
 namespace bench {
-	std::chrono::time_point<std::chrono::system_clock> startTime, endTime;
-	std::chrono::duration<double> elapsedTime;
+	static std::chrono::time_point<std::chrono::system_clock> start_time, end_time;
+	static std::chrono::duration<double> elapsed_time;
 
-	void title(const std::string& title) {
-		std::cout << std::endl << std::string(title.size(), '#') << std::endl;
-		std::cout << title << std::endl;
-		std::cout << std::string(title.size(), '#') << std::endl << std::endl;
+	static inline void title(const char* message) {
+		printf("%.*s\n", (int)strlen(message),
+				"############################################################");
+		printf("%s\n", message);
+		printf("%.*s\n", (int)strlen(message),
+				"############################################################");
 	}
+	[[deprecated("Please use 'title(const char* message)' instead.")]]
+	static inline void title(const std::string& message) { title(message.c_str()); }
 
-	void start(const std::string& message = "") {
-		if (!message.empty()) {
-			std::cout << std::endl << message << std::endl;
-			std::cout << std::string(message.size(), '-') << std::endl;
+	static inline void start(const char* message = "") {
+		if (strlen(message) != 0) {
+			printf("\n%s\n", message);
+			printf("%.*s\n", (int)strlen(message),
+					"--------------------------------------------------------");
 		}
-		startTime = std::chrono::system_clock::now();
-	}
 
-	void end(const std::string& message = "") {
-		endTime = std::chrono::system_clock::now();
-		elapsedTime = endTime - startTime;
-
-		std::cout << std::setw(70) << std::left << message
-				<< std::setiosflags(std::ios::fixed)
-				<< elapsedTime.count() << "s" << std::endl;
+		start_time = std::chrono::system_clock::now();
 	}
+	[[deprecated("Please use 'start(const char* message)' instead.")]]
+	static inline void start(const std::string& message) { start(message.c_str()); }
+
+	static inline void stop(const char* message = "") {
+		end_time = std::chrono::system_clock::now();
+		elapsed_time = end_time - start_time;
+
+		printf("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
+	}
+	[[deprecated("Please use 'stop(const char* message)' instead.")]]
+	static inline void end(const std::string& message) { stop(message.c_str()); }
 
 	/**
 	 * This deactivates compiler optimizations for the passed pointer.

@@ -153,7 +153,7 @@ int main()
 		len += strlen(str + (i % str_size));
 	}
 	printf("%lld\n", len);
-	bench::end("Platform strlen");
+	bench::stop("Platform strlen");
 
 	len = 0;
 	bench::start();
@@ -161,7 +161,7 @@ int main()
 		len += basic_strlen(str + (i % str_size));
 	}
 	printf("%lld\n", len);
-	bench::end("Basic strlen");
+	bench::stop("Basic strlen");
 
 	len = 0;
 	bench::start();
@@ -169,7 +169,7 @@ int main()
 		len += simili_simd_strlen(str + (i % str_size));
 	}
 	printf("%lld\n", len);
-	bench::end("Simili SIMD strlen");
+	bench::stop("Simili SIMD strlen");
 
 	len = 0;
 	bench::start();
@@ -177,7 +177,7 @@ int main()
 		len += simd_strlen(str + (i % str_size));
 	}
 	printf("%lld\n", len);
-	bench::end("SIMD strlen");
+	bench::stop("SIMD strlen");
 
 	return 0;
 }
