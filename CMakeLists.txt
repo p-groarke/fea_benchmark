@@ -10,12 +10,7 @@ file(GLOB HEADER_FILES ${PROJECT_SOURCE_DIR}/include/bench_util.h)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "-O3")
 
-# add_library(${PROJECT_NAME} INTERFACE)
-# target_sources(${PROJECT_NAME} INTERFACE ${HEADER_FILES})
-# target_include_directories(${PROJECT_NAME} INTERFACE include/)
-
 add_library(${PROJECT_NAME} INTERFACE)
-#target_sources(${PROJECT_NAME} INTERFACE ${HEADER_FILES})
 target_include_directories(${PROJECT_NAME} INTERFACE
 	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -35,9 +30,6 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	target_compile_options(${PROJECT_NAME} INTERFACE /W4 /WX)
 endif()
-
-#install(FILES ${HEADER_FILES} DESTINATION /usr/local/include/bench_util/)
-
 
 
 # Install Package Configuration
