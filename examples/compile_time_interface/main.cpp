@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <vector>
 
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 /*interface*/ struct IPotato {
 	void* potato;

@@ -1,5 +1,5 @@
 #include <functional>
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 using std::placeholders::_1;
 

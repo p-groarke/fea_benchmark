@@ -1,4 +1,4 @@
-#include "../../bench_util.h"
+#include "bench_util.h"
 #include <stdio.h>
 #include <emmintrin.h>
 

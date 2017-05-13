@@ -1,4 +1,4 @@
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 struct NotPacked {
 	char c = 'c';

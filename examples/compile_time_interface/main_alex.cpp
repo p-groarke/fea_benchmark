@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 class StructImplement;
 

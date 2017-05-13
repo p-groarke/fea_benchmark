@@ -1,6 +1,6 @@
 #include <functional>
 
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 int qty = 50;
 

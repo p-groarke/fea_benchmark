@@ -1,4 +1,4 @@
-#include "../../bench_util.h"
+#include "bench_util.h"
 #include <unistd.h>
 #include <cstdlib>
 #include <cstdio>

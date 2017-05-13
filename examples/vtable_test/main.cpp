@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 class IPotato {
 public:

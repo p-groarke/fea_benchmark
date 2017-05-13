@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "../../bench_util.h"
+#include "bench_util.h"
 
 double constFib(const double& n) {
 	if (n < 2)
