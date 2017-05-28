@@ -4,7 +4,7 @@ Some benchmarks and benchmarking helper functions.
 ## Instructions
 You can simply include bench_util.h in your program. It is a collection of functions inside `bench` namespace.
 
-Alternatively, if you previously `make install`ed the header, you can use cmake's `find_package`. In your CMakeLists.txt :
+Alternatively, you can use cmake's `find_package`. In your `CMakeLists.txt` :
 ```
 find_package(bench_util REQUIRED)
 target_include_directories(${project_name} PRIVATE ${BENCH_UTIL_INCLUDE_DIRS})
@@ -13,12 +13,9 @@ target_include_directories(${project_name} PRIVATE ${BENCH_UTIL_INCLUDE_DIRS})
 ### Cmake
 You can build all examples and install the header in your user include path easily.
 ```
-mkdir build
-cd build
-cmake ..
-make
-make install
+$ mkdir build && cd build && cmake .. && cmake --build . && make install
 ```
+This also installs the appropriate files so you can include the header lib using cmake `find_package`.
 
 ### Usage
 ```
