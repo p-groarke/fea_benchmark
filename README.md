@@ -24,12 +24,12 @@ bench::title("Your title");
 bench::start("Optional string");
 // Do stuff
 bench::clobber();
-bench::end("Optional but really recommended string");
+bench::stop("Optional but really recommended string");
 
 bench::start();
 // Do stuff
 bench::clobber();
-bench::end("Optional but really recommended string");
+bench::stop("Optional but really recommended string");
 ```
 
 outputs:
