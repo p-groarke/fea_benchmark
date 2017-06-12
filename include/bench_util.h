@@ -67,11 +67,12 @@ namespace bench {
 	[[deprecated("Please use 'start(const char* message)' instead.")]]
 	static inline void start(const std::string& message) { start(message.c_str()); }
 
-	static inline void stop(const char* message = "") {
+	static inline double stop(const char* message = "") {
 		end_time = std::chrono::system_clock::now();
 		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
 		printf("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
+        return elapsed_time.count();
 	}
 	[[deprecated("Please use 'stop(const char* message)' instead.")]]
 	static inline void end(const std::string& message) { stop(message.c_str()); }
