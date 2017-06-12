@@ -43,7 +43,7 @@
  */
 
 namespace bench {
-	static std::chrono::time_point<std::chrono::system_clock> start_time, end_time;
+	static std::chrono::time_point<std::chrono::high_resolution_clock> start_time, end_time;
 
 	static inline void title(const char* message) {
 		printf("%.*s\n", (int)strlen(message),
@@ -62,13 +62,13 @@ namespace bench {
 					"--------------------------------------------------------");
 		}
 
-		start_time = std::chrono::system_clock::now();
+		start_time = std::chrono::high_resolution_clock::now();
 	}
 	[[deprecated("Please use 'start(const char* message)' instead.")]]
 	static inline void start(const std::string& message) { start(message.c_str()); }
 
 	static inline double stop(const char* message = "") {
-		end_time = std::chrono::system_clock::now();
+		end_time = std::chrono::high_resolution_clock::now();
 		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
 		printf("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
