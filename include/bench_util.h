@@ -72,7 +72,7 @@ namespace bench {
 		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
 		printf("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
-        return elapsed_time.count();
+		return elapsed_time.count();
 	}
 	[[deprecated("Please use 'stop(const char* message)' instead.")]]
 	static inline void end(const std::string& message) { stop(message.c_str()); }
