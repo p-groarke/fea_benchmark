@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.5.0)
 set(PROJECT_NAME bench_util)
 project(${PROJECT_NAME} CXX)
-set(BENCH_UTIL_VERSION 2.0.0)
+set(BENCH_UTIL_VERSION 2.1.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 file(GLOB HEADER_FILES ${PROJECT_SOURCE_DIR}/include/bench_util.h)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-O3")
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -21,11 +21,11 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 )
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-	target_compile_options(${PROJECT_NAME} INTERFACE -Wall -Wextra -Wpedantic
+	target_compile_options(${PROJECT_NAME} INTERFACE -Wall -Wextra
 		-Werror)
 
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	target_compile_options(${PROJECT_NAME} INTERFACE -Wall -Wextra -Wpedantic
+	target_compile_options(${PROJECT_NAME} INTERFACE -Wall -Wextra
 		-Werror)
 
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
@@ -35,9 +35,13 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	target_compile_options(${PROJECT_NAME} INTERFACE /W4 /WX)
 endif()
 
+option(BENCH_SHUTUP "Disable bench_util console output" Off)
+if (BENCH_SHUTUP)
+	target_compile_definitions(${PROJECT_NAME} INTERFACE BENCH_SHUTUP=1)
+endif()
+
 
 # Install Package Configuration
-
 set(BENCH_UTIL_INSTALL_CONFIGDIR "${CMAKE_INSTALL_LIBDIR}/cmake/bench_util")
 install(FILES ${HEADER_FILES} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/bench_util")
 
@@ -93,8 +97,9 @@ foreach(d ${EX_ALL})
 			string(REPLACE ".cpp" "" n ${n})
 
 			add_executable(${d}${n} ${PROJECT_SOURCE_DIR}/examples/${d}/${f})
-			target_include_directories(${d}${n} PRIVATE
-					${CMAKE_CURRENT_SOURCE_DIR}/include)
+			target_link_libraries(${d}${n} ${PROJECT_NAME})
+			#			target_include_directories(${d}${n} PRIVATE
+			#					${CMAKE_CURRENT_SOURCE_DIR}/include)
 		endforeach()
 	endif()
 endforeach()

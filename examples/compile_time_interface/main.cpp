@@ -26,13 +26,13 @@ struct Tomato : ITomato {
 	int test = 42;
 };
 
-const int qty = 1000000000;
+//const int qty = 1000000000;
 const int v_size = 100000000;
 
-int main (int argc, char** argv) {
+int main (int, char**) {
 	std::vector<ITomato*> tom_vec(v_size);
 	std::vector<IPotato> pot_vec(v_size);
-	ITomato* it = new Tomato();
+//	ITomato* it = new Tomato();
 	Potato* p = new Potato();
 	long** p_vtable = (long **)p;
 	IPotato ip;
@@ -50,12 +50,12 @@ int main (int argc, char** argv) {
 //	}
 //	bench::stop("struct with C callback");
 
-	for (int i = 0; i < tom_vec.size(); ++i) {
+	for (size_t i = 0; i < tom_vec.size(); ++i) {
 		tom_vec[i] = new Tomato();
 	}
 
 	// Not storing the object in vector, just methods.
-	for (int i = 0; i < pot_vec.size(); ++i) {
+	for (size_t i = 0; i < pot_vec.size(); ++i) {
 		pot_vec[i].potato = new Potato();
 		long** pot_vtable = (long **)(pot_vec[i].potato);
 		pot_vec[i].update = (int (*)(void*))pot_vtable[0][0];

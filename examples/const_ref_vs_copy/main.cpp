@@ -14,7 +14,7 @@ double copyFib(double n) {
 	return copyFib(n - 1) + copyFib(n - 2);
 }
 
-int main(int argc, char** argv) {
+int main(int, char**) {
 	bench::title("const reference VS. copy -- using doubles");
 
 	bench::start();

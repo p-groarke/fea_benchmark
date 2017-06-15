@@ -46,14 +46,24 @@
  * https://www.youtube.com/watch?v=nXaxk27zwlk
  */
 
+#if BENCH_SHUTUP
+	#define BENCH_PRINT(...)
+#else
+	#define BENCH_PRINT(format, ...) printf("" format "", ##__VA_ARGS__)
+#endif
+
 namespace bench {
+	// Compiler freaks out with macro-only usage.
+	template <typename T> void m_unused(const T&) {}
+
 	static std::chrono::time_point<std::chrono::high_resolution_clock> start_time, end_time;
 
 	static inline void title(const char* message) {
-		printf("%.*s\n", (int)strlen(message),
+		m_unused(message);
+		BENCH_PRINT("%.*s\n", (int)strlen(message),
 				"############################################################");
-		printf("%s\n", message);
-		printf("%.*s\n", (int)strlen(message),
+		BENCH_PRINT("%s\n", message);
+		BENCH_PRINT("%.*s\n", (int)strlen(message),
 				"############################################################");
 	}
 	[[deprecated("Please use 'title(const char* message)' instead.")]]
@@ -61,8 +71,8 @@ namespace bench {
 
 	static inline void start(const char* message = "") {
 		if (strlen(message) != 0) {
-			printf("\n%s\n", message);
-			printf("%.*s\n", (int)strlen(message),
+			BENCH_PRINT("\n%s\n", message);
+			BENCH_PRINT("%.*s\n", (int)strlen(message),
 					"--------------------------------------------------------");
 		}
 
@@ -72,10 +82,11 @@ namespace bench {
 	static inline void start(const std::string& message) { start(message.c_str()); }
 
 	static inline double stop(const char* message = "") {
+		m_unused(message);
 		end_time = std::chrono::high_resolution_clock::now();
 		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
-		printf("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
+		BENCH_PRINT("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
 		return elapsed_time.count();
 	}
 	[[deprecated("Please use 'stop(const char* message)' instead.")]]

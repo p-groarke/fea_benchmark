@@ -195,7 +195,7 @@ int itostr(unsigned int val, char* str_buffer) {
 }
 
 template <typename T>
-inline int p_format(char* str_buffer, int str_len, T value) {
+inline int p_format(char*, int str_len, T) {
 	return str_len;
 }
 
@@ -250,7 +250,7 @@ inline void Print(T t, P... p) {
 }
 
 
-int main (int argc, char** argv) {
+int main (int, char**) {
 	bench::title("Fast print");
 
 	const int qty = 100000;

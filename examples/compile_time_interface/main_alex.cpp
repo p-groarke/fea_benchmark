@@ -64,7 +64,7 @@ public:
 	int _sum;
 };
 
-int main(int argc, const char* argv[])
+int main(int, char**)
 {
 
 	StructImplement my_struct(10000);

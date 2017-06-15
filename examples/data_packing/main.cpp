@@ -1,3 +1,4 @@
+//#define BENCH_SHUTUP 1
 #include "bench_util.h"
 
 struct NotPacked {
@@ -18,15 +19,15 @@ struct Packed {
 	double d = 3.22;
 } __attribute((packed));
 
-const int qty = 1000000000;
-int main (int argc, char** argv)
+const int qty = 10000000;
+int main (int, char**)
 {
-	int temp;
+	int temp = 0;
 	Packed pack;
 	NotPacked npack;
 
 	bench::title("Iterating over packed data vs non-packed.");
-	printf("%d iterations. Packed size : %zu bytes, Non-packed size : %zu bytes\n",
+	BENCH_PRINT("%d iterations. Packed size : %zu bytes, Non-packed size : %zu bytes\n",
 			qty, sizeof(Packed), sizeof(NotPacked));
 
 	bench::start();
@@ -53,6 +54,6 @@ int main (int argc, char** argv)
 	}
 	bench::stop("Packed Data");
 
-	printf("%d", temp);
+	printf("%d\n", temp);
 	return 0;
 }

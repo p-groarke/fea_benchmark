@@ -19,7 +19,7 @@ This also installs the appropriate files so you can include the header lib using
 
 ### Usage
 ```
-#include <bench_util/bench_util.h>
+#include <bench_util.h>
 
 [...]
 
@@ -47,6 +47,29 @@ Optional string
 ---------------
 Optional but really recommended string                                0.000000s
 Optional but really recommended string                                0.000000s
+```
+
+### Disabling Output
+A cmake option is available if you wish to disable console output completely.
+```
+-DBENCH_SHUTUP=On
+```
+
+You can turn off the benchmark output for a single file by defining `BENCH_SHUTUP 1` before you include the header.
+```
+#define BENCH_SHUTUP 1
+#include <bench_util.h>
+```
+
+If you output information related to the benchmark, this output can be turned off along side the benchmarks. Use the `BENCH_PRINT` macro to print your messages. It is a wrapper on top of printf, and behaves the same way.
+```
+#define BENCH_SHUTUP 1
+#include <bench_util.h>
+
+/* Your code here ... */
+
+BENCH_PRINT("Some int related to benchmarks %d\n", 42); // This wont output when you define BENCH_SHUTUP 1.
+
 ```
 
 ### Compiling

@@ -1,6 +1,6 @@
 #include "bench_util.h"
 
-int main (int argc, char** argv) {
+int main (int, char**) {
 	bench::title("Your title");
 	bench::start("Optional string");
 	// Do stuff

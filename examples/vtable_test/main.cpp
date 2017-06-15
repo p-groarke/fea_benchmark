@@ -28,7 +28,7 @@ public:
 
 const int qty = 1000000000;
 
-int main (int argc, char** argv) {
+int main (int, char**) {
 
 //	std::string qty_string;
 //	std::cin >> qty_string;

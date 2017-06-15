@@ -68,7 +68,7 @@ inline double func_inline(double n)
 }
 
 
-int main(int argc, char** argv)
+int main(int, char**)
 {
 	Normal normal_object;
 

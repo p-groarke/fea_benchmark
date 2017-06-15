@@ -57,7 +57,7 @@ std::function<double(double)> funcValue = [](double n) -> double {
 	return funcValue(n - 1) + funcValue(n - 2);
 };
 
-int main (int argc, char** argv) {
+int main (int, char**) {
 	bench::title("Comparing different ways to call methods and functions.");
 
 	bench::start();
