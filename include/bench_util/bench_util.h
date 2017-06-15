@@ -100,6 +100,7 @@ namespace bench {
 	 */
 	static inline void escape(void *p) {
 #ifdef _MSC_VER
+		m_unused(p);
 		_WriteBarrier();
 #else
 		asm volatile("" : : "g"(p) : "memory");
