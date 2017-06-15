@@ -6,7 +6,7 @@ set(BENCH_UTIL_VERSION 2.1.0)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-file(GLOB HEADER_FILES ${PROJECT_SOURCE_DIR}/include/bench_util.h)
+file(GLOB HEADER_FILES ${PROJECT_SOURCE_DIR}/include/bench_util/bench_util.h)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-O3")
 
@@ -98,8 +98,6 @@ foreach(d ${EX_ALL})
 
 			add_executable(${d}${n} ${PROJECT_SOURCE_DIR}/examples/${d}/${f})
 			target_link_libraries(${d}${n} ${PROJECT_NAME})
-			#			target_include_directories(${d}${n} PRIVATE
-			#					${CMAKE_CURRENT_SOURCE_DIR}/include)
 		endforeach()
 	endif()
 endforeach()

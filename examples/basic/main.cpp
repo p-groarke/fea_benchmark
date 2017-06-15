@@ -1,4 +1,4 @@
-#include "bench_util.h"
+#include <bench_util/bench_util.h>
 
 int main (int, char**) {
 	bench::title("Your title");

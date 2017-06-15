@@ -1,5 +1,5 @@
 //#define BENCH_SHUTUP 1
-#include "bench_util.h"
+#include <bench_util/bench_util.h>
 
 struct NotPacked {
 	char c = 'c';
