@@ -33,6 +33,10 @@
 #include <cstdio>
 #include <cstring>
 
+#ifdef _MSC_VER
+	#include <intrin.h>
+#endif
+
 /* Deprecated */
 #include <iostream>
 #include <string>
