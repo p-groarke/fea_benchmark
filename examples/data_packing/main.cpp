@@ -26,7 +26,7 @@ int main (int argc, char** argv)
 	NotPacked npack;
 
 	bench::title("Iterating over packed data vs non-packed.");
-	printf("%d iterations. Packed size : %d bytes, Non-packed size : %d bytes\n",
+	printf("%d iterations. Packed size : %zu bytes, Non-packed size : %zu bytes\n",
 			qty, sizeof(Packed), sizeof(NotPacked));
 
 	bench::start();
