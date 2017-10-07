@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.5.0)
-set(PROJECT_NAME bench_util)
-project(${PROJECT_NAME} CXX)
-set(BENCH_UTIL_VERSION 2.1.0)
+project(bench_util CXX)
+set(${PROJECT_NAME}_VERSION 2.1.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -47,7 +46,7 @@ install(FILES ${HEADER_FILES} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/bench_uti
 
 write_basic_package_version_file(
 	"${CMAKE_CURRENT_BINARY_DIR}/bench_utilConfigVersion.cmake"
-	VERSION ${BENCH_UTIL_VERSION}
+	VERSION ${${PROJECT_NAME}_VERSION}
 	COMPATIBILITY AnyNewerVersion
 )
 
@@ -82,22 +81,26 @@ export(PACKAGE ${PROJECT_NAME})
 
 
 # Examples
-file(GLOB EX_ALL RELATIVE ${PROJECT_SOURCE_DIR}/examples/
-		${PROJECT_SOURCE_DIR}/examples/*)
-set(EX_DIRS "")
-file(GLOB EX_SRC ${PROJECT_SOURCE_DIR}/examples/*.cpp)
-foreach(d ${EX_ALL})
-	if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/examples/${d})
-		message(STATUS "Found example : " ${d})
+option(BUILD_EXAMPLES "Build accompanying examples." On)
 
-		file(GLOB D_SRC RELATIVE ${PROJECT_SOURCE_DIR}/examples/${d}/
-				${PROJECT_SOURCE_DIR}/examples/${d}/*.cpp)
-		foreach(f ${D_SRC})
-			string(REPLACE "main" "" n ${f})
-			string(REPLACE ".cpp" "" n ${n})
+if (${BUILD_EXAMPLES})
+	file(GLOB EX_ALL RELATIVE ${PROJECT_SOURCE_DIR}/examples/
+			${PROJECT_SOURCE_DIR}/examples/*)
+	set(EX_DIRS "")
+	file(GLOB EX_SRC ${PROJECT_SOURCE_DIR}/examples/*.cpp)
+	foreach(d ${EX_ALL})
+		if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/examples/${d})
+			message(STATUS "Found example : " ${d})
 
-			add_executable(${d}${n} ${PROJECT_SOURCE_DIR}/examples/${d}/${f})
-			target_link_libraries(${d}${n} ${PROJECT_NAME})
-		endforeach()
-	endif()
-endforeach()
+			file(GLOB D_SRC RELATIVE ${PROJECT_SOURCE_DIR}/examples/${d}/
+					${PROJECT_SOURCE_DIR}/examples/${d}/*.cpp)
+			foreach(f ${D_SRC})
+				string(REPLACE "main" "" n ${f})
+				string(REPLACE ".cpp" "" n ${n})
+
+				add_executable(${d}${n} ${PROJECT_SOURCE_DIR}/examples/${d}/${f})
+				target_link_libraries(${d}${n} ${PROJECT_NAME})
+			endforeach()
+		endif()
+	endforeach()
+endif()
