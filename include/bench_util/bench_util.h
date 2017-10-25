@@ -49,7 +49,7 @@
 #if BENCH_SHUTUP
 	#define BENCH_PRINT(...)
 #else
-	#define BENCH_PRINT(format, ...) printf("" format "", ##__VA_ARGS__)
+	#define BENCH_PRINT(stream, format, ...) fprintf(stream, "" format "", ##__VA_ARGS__)
 #endif
 
 namespace bench {
@@ -58,21 +58,21 @@ namespace bench {
 
 	static std::chrono::time_point<std::chrono::high_resolution_clock> start_time, end_time;
 
-	static inline void title(const char* message) {
+	static inline void title(const char* message, FILE* stream = stdout) {
 		m_unused(message);
-		BENCH_PRINT("%.*s\n", (int)strlen(message),
+		BENCH_PRINT(stream, "%.*s\n", (int)strlen(message),
 				"############################################################");
-		BENCH_PRINT("%s\n", message);
-		BENCH_PRINT("%.*s\n", (int)strlen(message),
+		BENCH_PRINT(stream, "%s\n", message);
+		BENCH_PRINT(stream, "%.*s\n", (int)strlen(message),
 				"############################################################");
 	}
 	[[deprecated("Please use 'title(const char* message)' instead.")]]
 	static inline void title(const std::string& message) { title(message.c_str()); }
 
-	static inline void start(const char* message = "") {
+	static inline void start(const char* message = "", FILE* stream = stdout) {
 		if (strlen(message) != 0) {
-			BENCH_PRINT("\n%s\n", message);
-			BENCH_PRINT("%.*s\n", (int)strlen(message),
+			BENCH_PRINT(stream, "\n%s\n", message);
+			BENCH_PRINT(stream, "%.*s\n", (int)strlen(message),
 					"--------------------------------------------------------");
 		}
 
@@ -81,12 +81,12 @@ namespace bench {
 	[[deprecated("Please use 'start(const char* message)' instead.")]]
 	static inline void start(const std::string& message) { start(message.c_str()); }
 
-	static inline double stop(const char* message = "") {
+	static inline double stop(const char* message = "", FILE* stream = stdout) {
 		m_unused(message);
 		end_time = std::chrono::high_resolution_clock::now();
 		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
-		BENCH_PRINT("%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
+		BENCH_PRINT(stream, "%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
 		return elapsed_time.count();
 	}
 	[[deprecated("Please use 'stop(const char* message)' instead.")]]
