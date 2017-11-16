@@ -1,4 +1,6 @@
 #include <functional>
+#include <iostream>
+
 #include <bench_util/bench_util.h>
 
 using std::placeholders::_1;

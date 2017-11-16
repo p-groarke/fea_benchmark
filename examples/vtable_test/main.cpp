@@ -4,23 +4,25 @@
 #include <vector>
 #include <bench_util/bench_util.h>
 
-class IPotato {
-public:
+#ifndef _MSC_VER
+	#define NO_INLINE __attribute__((noinline))
+#else
+	#define NO_INLINE __declspec(noinline)
+#endif
+
+struct IPotato {
 	virtual void update(/*int a*/) = 0;
 };
 
-
-class Potato : public IPotato {
-public:
-	__attribute__((noinline)) void update(/*int a*/) {
+struct Potato : public IPotato {
+	NO_INLINE void update(/*int a*/) {
 		++test;// += a;
 	}
 	int test = 42;
 };
 
-class NormalClass {
-public:
-	__attribute__((noinline)) void update(/*int a*/) {
+struct NormalClass {
+	NO_INLINE void update(/*int a*/) {
 		++test;// += a;
 	}
 	int test = 42;

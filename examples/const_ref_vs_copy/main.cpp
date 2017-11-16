@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 
 #include <bench_util/bench_util.h>

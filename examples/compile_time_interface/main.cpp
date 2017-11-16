@@ -3,6 +3,12 @@
 
 #include <bench_util/bench_util.h>
 
+#ifndef _MSC_VER
+	#define NO_INLINE __attribute__((noinline))
+#else
+	#define NO_INLINE __declspec(noinline)
+#endif
+
 /*interface*/ struct IPotato {
 	void* potato;
 	int (*update)(void*);
@@ -13,14 +19,14 @@ struct ITomato {
 };
 
 struct Potato : ITomato {
-	__attribute__((noinline)) int update() {
+	NO_INLINE int update() {
 		return ++test;
 	}
 	int test = 42;
 };
 
 struct Tomato : ITomato {
-	__attribute__((noinline)) int update() {
+	NO_INLINE int update() {
 		return ++test;
 	}
 	int test = 42;

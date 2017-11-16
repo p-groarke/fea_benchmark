@@ -1,8 +1,16 @@
 #include <bench_util/bench_util.h>
-#include <unistd.h>
+
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <iostream>
+
+#ifdef _MSC_VER
+#include <io.h>
+#define write _write
+#else
+#include <unistd.h>
+#endif
 
 inline int mul2(int v) {
 	// v * 2
@@ -126,7 +134,7 @@ int itostr(int value, char* str_buffer) {
 	while (val > 0) {
 		//*c-- = '0' + (val % 10);
 		// val /= 10;
-		*c-- = '0' + remu10(val);
+		*c-- = static_cast<char>('0' + remu10(val));
 		val = divu10(val);
 	}
 
@@ -186,7 +194,7 @@ int itostr(unsigned int val, char* str_buffer) {
 
 	while (val > 0) {
 		//		*c--='0' + (val % 10);
-		*c-- = '0' + remu10(val);
+		*c-- = static_cast<char>('0' + remu10(val));
 		//		val /= 10;
 		val = divu10(val);
 	}
@@ -213,7 +221,7 @@ inline int p_format<unsigned int>(char* str_buffer, int str_len, unsigned int va
 
 template <>
 inline int p_format<const char*>(char* str_buffer, int str_len, const char* value) {
-	strcpy(str_buffer + str_len, value);
+	strcpy_s(str_buffer + str_len, strlen(value), value);
 	int t_len = str_len + strlen(value);
 	*(str_buffer + t_len) = ' ';
 	return t_len + 1;
@@ -221,12 +229,12 @@ inline int p_format<const char*>(char* str_buffer, int str_len, const char* valu
 
 template <>
 inline int p_format<double>(char* str_buffer, int str_len, double value) {
-	return str_len + sprintf(str_buffer + str_len, "%f ", value);
+	return str_len + sprintf_s(str_buffer + str_len, 6, "%f ", value);
 }
 
 template <>
 inline int p_format<float>(char* str_buffer, int str_len, float value) {
-	return str_len + sprintf(str_buffer + str_len, "%f ", value);
+	return str_len + sprintf_s(str_buffer + str_len, 6, "%f ", value);
 }
 
 inline void PrintChild(char* str_buffer, int str_len) {

@@ -6,6 +6,12 @@
 
 #include <bench_util/bench_util.h>
 
+#ifndef _MSC_VER
+	#define NO_INLINE __attribute__((noinline))
+#else
+	#define NO_INLINE __declspec(noinline)
+#endif
+
 class StructImplement;
 
 class Struct {
@@ -32,7 +38,7 @@ public:
 	int _sum;
 };
 
-__attribute__((noinline)) void StructImplement_OnUpdate(Struct* my_struct)
+NO_INLINE void StructImplement_OnUpdate(Struct* my_struct)
 {
 	StructImplement* s = static_cast<StructImplement*>(my_struct);
 	s->_sum += s->_banana;
@@ -55,7 +61,7 @@ public:
 	{
 	}
 
-	__attribute__((noinline)) void OnUpdate()
+	NO_INLINE void OnUpdate()
 	{
 		_sum += _banana;
 	}

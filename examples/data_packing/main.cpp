@@ -1,6 +1,12 @@
 //#define BENCH_SHUTUP 1
 #include <bench_util/bench_util.h>
 
+#ifndef _MSC_VER
+	#define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#else
+	#define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
+#endif
+
 struct NotPacked {
 	char c = 'c';
 	long l = 42;
@@ -10,6 +16,7 @@ struct NotPacked {
 	double d = 3.22;
 };
 
+PACK(
 struct Packed {
 	char c = 'c';
 	long l = 42;
@@ -17,7 +24,7 @@ struct Packed {
 	char b = 'b';
 	int i = 42;
 	double d = 3.22;
-} __attribute((packed));
+});
 
 const int qty = 10000000;
 int main (int, char**)
@@ -37,7 +44,7 @@ int main (int, char**)
 		temp += npack.a;
 		temp += npack.b;
 		temp += npack.i;
-		temp += npack.d;
+		temp += static_cast<int>(npack.d);
 		bench::clobber();
 	}
 	bench::stop("Non-Packed Data");
@@ -49,7 +56,7 @@ int main (int, char**)
 		temp += pack.a;
 		temp += pack.b;
 		temp += pack.i;
-		temp += pack.d;
+		temp += static_cast<int>(pack.d);
 		bench::clobber();
 	}
 	bench::stop("Packed Data");

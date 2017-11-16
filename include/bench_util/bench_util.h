@@ -37,19 +37,11 @@
 	#include <intrin.h>
 #endif
 
-/* Deprecated */
-#include <iostream>
-#include <string>
-
-/**
- * escape(void*) and clobber() are from Chandler Carruth. More info:
- * https://www.youtube.com/watch?v=nXaxk27zwlk
- */
-
 #if BENCH_SHUTUP
 	#define BENCH_PRINT(...)
 #else
-	#define BENCH_PRINT(stream, format, ...) fprintf(stream, "" format "", ##__VA_ARGS__)
+	#define BENCH_PRINT(format, ...) printf("" format "", ##__VA_ARGS__)
+	#define BENCH_PRINT_STREAM(stream, format, ...) fprintf(stream, "" format "", ##__VA_ARGS__)
 #endif
 
 namespace bench {
@@ -60,43 +52,38 @@ namespace bench {
 
 	static inline void title(const char* message, FILE* stream = stdout) {
 		m_unused(message);
-		BENCH_PRINT(stream, "%.*s\n", (int)strlen(message),
+		BENCH_PRINT_STREAM(stream, "%.*s\n", (int)strlen(message),
 				"############################################################");
-		BENCH_PRINT(stream, "%s\n", message);
-		BENCH_PRINT(stream, "%.*s\n", (int)strlen(message),
+		BENCH_PRINT_STREAM(stream, "%s\n", message);
+		BENCH_PRINT_STREAM(stream, "%.*s\n", (int)strlen(message),
 				"############################################################");
 	}
-	[[deprecated("Please use 'title(const char* message)' instead.")]]
-	static inline void title(const std::string& message) { title(message.c_str()); }
 
 	static inline void start(const char* message = "", FILE* stream = stdout) {
 		if (strlen(message) != 0) {
-			BENCH_PRINT(stream, "\n%s\n", message);
-			BENCH_PRINT(stream, "%.*s\n", (int)strlen(message),
+			BENCH_PRINT_STREAM(stream, "\n%s\n", message);
+			BENCH_PRINT_STREAM(stream, "%.*s\n", (int)strlen(message),
 					"--------------------------------------------------------");
 		}
 
 		start_time = std::chrono::high_resolution_clock::now();
 	}
-	[[deprecated("Please use 'start(const char* message)' instead.")]]
-	static inline void start(const std::string& message) { start(message.c_str()); }
 
 	static inline double stop(const char* message = "", FILE* stream = stdout) {
 		m_unused(message);
 		end_time = std::chrono::high_resolution_clock::now();
 		const std::chrono::duration<double> elapsed_time = end_time - start_time;
 
-		BENCH_PRINT(stream, "%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
+		BENCH_PRINT_STREAM(stream, "%s%*fs\n", message, 70 - (int)strlen(message), elapsed_time.count());
 		return elapsed_time.count();
 	}
-	[[deprecated("Please use 'stop(const char* message)' instead.")]]
-	static inline void end(const std::string& message) { stop(message.c_str()); }
 
 	/**
 	 * This deactivates compiler optimizations for the passed pointer.
 	 * It indicates that the pointer memory "could" have been modified.
 	 *
 	 * Usage: Pass the pointer to an allocated object you want to benchmark.
+	 * https://www.youtube.com/watch?v=nXaxk27zwlk
 	 */
 	static inline void escape(void *p) {
 #ifdef _MSC_VER
@@ -112,6 +99,7 @@ namespace bench {
 	 * could have been modified.
 	 *
 	 * Usage: Use after a call, to make sure the compiler doesn't remove the call.
+	 * https://www.youtube.com/watch?v=nXaxk27zwlk
 	 */
 	static inline void clobber() {
 #ifdef _MSC_VER
