@@ -3,7 +3,7 @@
 #include <emmintrin.h>
 
 #if defined(_MSC_VER)
-	#include <intrin.h> // Valid for >= 1300. Older VS not supported in fst.
+#include <intrin.h> // Valid for >= 1300. Older VS not supported in fst.
 #endif
 
 // Test alex's
@@ -18,23 +18,23 @@
 // 	else { return (((char*)i) - 12) - s; }
 // }
 
-size_t basic_strlen(const char *s) {
-    const char *start = s;
-    while(*s)
-        s++;
-    return s - start;
+size_t basic_strlen(const char* s) {
+	const char* start = s;
+	while (*s)
+		s++;
+	return s - start;
 }
 
-size_t simili_simd_strlen(const char *s) {
-    size_t len = 0;
-    for(;;) {
-        unsigned x = *(unsigned*)s;
-        if((x & 0xFF) == 0) return len;
-        if((x & 0xFF00) == 0) return len + 1;
-        if((x & 0xFF0000) == 0) return len + 2;
-        if((x & 0xFF000000) == 0) return len + 3;
-        s += 4, len += 4;
-    }
+size_t simili_simd_strlen(const char* s) {
+	size_t len = 0;
+	for (;;) {
+		unsigned x = *(unsigned*)s;
+		if ((x & 0xFF) == 0) return len;
+		if ((x & 0xFF00) == 0) return len + 1;
+		if ((x & 0xFF0000) == 0) return len + 2;
+		if ((x & 0xFF000000) == 0) return len + 3;
+		s += 4, len += 4;
+	}
 }
 
 inline std::size_t cross_platform_bsf(unsigned int mask)
@@ -71,7 +71,7 @@ std::size_t simd_strlen(const char* str)
 			/* Found the end in the first bits. */
 			return cross_platform_bsf(mask);
 		}
-		str = (const char *)(0x10 + (intptr_t)str & ~0xF);
+		str = (const char*)(0x10 + (intptr_t)str & ~0xF);
 	}
 
 	/* Search for 0. */
@@ -94,7 +94,7 @@ const int bench_qty = 100000000;
 
 int main()
 {
-	const char * str = ""
+	const char* str = ""
 		"potato potato potato potato potato potato potato potato potato "
 		"potato potato potato potato potato potato potato potato potato "
 		"potato potato potato potato potato potato potato potato potato "
@@ -145,7 +145,7 @@ int main()
 		"potato potato potato potato potato potato potato potato potato "
 		"potato potato potato potato potato potato potato potato potato "
 		"";
-	int str_size = strlen(str);
+	size_t str_size = strlen(str);
 
 	unsigned long long len = 0;
 	bench::start();
