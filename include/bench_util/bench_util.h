@@ -42,7 +42,6 @@
 #if BENCH_SHUTUP
 #define BENCH_PRINT(...)
 #else
-#define BENCH_PRINT(format, ...) printf("" format "", ##__VA_ARGS__)
 #define BENCH_PRINT_STREAM(stream, format, ...) \
 	fprintf(stream, "" format "", ##__VA_ARGS__)
 #endif
@@ -117,11 +116,6 @@ static inline void clobber() {
 }
 
 struct suite {
-	struct pair {
-		const char* message{ nullptr };
-		double time{ 0.0 };
-	};
-
 	void title(const char* message) {
 		_title = message;
 	}
@@ -170,6 +164,12 @@ struct suite {
 		_title = nullptr;
 		_results.clear();
 	}
+
+private:
+	struct pair {
+		const char* message{ nullptr };
+		double time{ 0.0 };
+	};
 
 	const char* _title{ nullptr };
 	std::vector<pair> _results;
