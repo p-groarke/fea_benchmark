@@ -121,16 +121,26 @@ struct suite {
 	}
 
 	template <class Func>
-	void benchmark(const char* message, Func&& func) {
-		std::chrono::time_point<std::chrono::high_resolution_clock> _start_time,
-				_end_time;
+	void benchmark(const char* message, Func&& func, size_t num_runs = 1) {
+		if (num_runs == 0) {
+			return;
+		}
 
-		_start_time = std::chrono::high_resolution_clock::now();
-		func();
-		_end_time = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double> elapsed_time = std::chrono::seconds(0);
 
-		std::chrono::duration<double> elapsed_time = _end_time - _start_time;
-		_results.push_back({ message, elapsed_time.count() });
+		for (size_t i = 0; i < num_runs; ++i) {
+			std::chrono::time_point<std::chrono::high_resolution_clock>
+					_start_time, _end_time;
+
+			_start_time = std::chrono::high_resolution_clock::now();
+			func();
+			_end_time = std::chrono::high_resolution_clock::now();
+
+			elapsed_time += _end_time - _start_time;
+		}
+
+		_results.push_back(
+				{ message, elapsed_time.count() / double(num_runs) });
 	}
 
 	void print(FILE* stream = stdout) {
