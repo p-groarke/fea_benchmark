@@ -1,3 +1,5 @@
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.conan.txt)
+
 cmake_minimum_required(VERSION 3.5.0)
 project(bench_util CXX)
 set(${PROJECT_NAME}_VERSION 2.1.0)
@@ -76,48 +78,19 @@ endif()
 
 
 # Install Package Configuration
-set(BENCH_UTIL_INSTALL_CONFIGDIR "${CMAKE_INSTALL_LIBDIR}/cmake/bench_util")
-install(FILES ${HEADER_FILES} DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/bench_util")
+install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}_targets)
 
-write_basic_package_version_file(
-	"${CMAKE_CURRENT_BINARY_DIR}/bench_utilConfigVersion.cmake"
-	VERSION ${${PROJECT_NAME}_VERSION}
-	COMPATIBILITY AnyNewerVersion
+install(EXPORT ${PROJECT_NAME}_targets
+	NAMESPACE ${PROJECT_NAME}::
+	FILE ${PROJECT_NAME}-config.cmake
+	DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}"
 )
 
-configure_package_config_file(
-	cmake/bench_utilConfig.cmake.in
-	${BENCH_UTIL_INSTALL_CONFIGDIR}/bench_utilConfig.cmake
-	INSTALL_DESTINATION ${BENCH_UTIL_INSTALL_CONFIGDIR}
-	PATH_VARS CMAKE_INSTALL_INCLUDEDIR
-	NO_CHECK_REQUIRED_COMPONENTS_MACRO
-)
-
-install(
-	FILES
-		"${CMAKE_CURRENT_BINARY_DIR}/${BENCH_UTIL_INSTALL_CONFIGDIR}/bench_utilConfig.cmake"
-		"${CMAKE_CURRENT_BINARY_DIR}/bench_utilConfigVersion.cmake"
-	DESTINATION ${BENCH_UTIL_INSTALL_CONFIGDIR}
-)
-
-
-install(TARGETS ${PROJECT_NAME} EXPORT bench_utilTargets)
-
-export(EXPORT bench_utilTargets
-	FILE "${CMAKE_CURRENT_BINARY_DIR}/bench_utilTargets.cmake"
-)
-
-install(
-	EXPORT bench_utilTargets FILE bench_utilTargets.cmake
-	DESTINATION ${BENCH_UTIL_INSTALL_CONFIGDIR}
-)
-
-export(PACKAGE ${PROJECT_NAME})
-
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 
 
 # Tests
-option(BUILD_TESTING "Build and run tests." Off)
+option(BUILD_TESTING "Build and run tests." On)
 if (${BUILD_TESTING})
 	enable_testing()
 	
@@ -142,30 +115,4 @@ if (${BUILD_TESTING})
 		target_compile_definitions(${TEST_NAME} PRIVATE NOMINMAX)
 		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${TEST_NAME})
 	endif()
-endif()
-
-# Examples
-option(BUILD_EXAMPLES "Build accompanying examples." Off)
-
-if (${BUILD_EXAMPLES})
-	file(GLOB EX_ALL RELATIVE ${PROJECT_SOURCE_DIR}/examples/
-			${PROJECT_SOURCE_DIR}/examples/*)
-	set(EX_DIRS "")
-	file(GLOB EX_SRC ${PROJECT_SOURCE_DIR}/examples/*.cpp)
-	foreach(d ${EX_ALL})
-		if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/examples/${d})
-			message(STATUS "Found example : " ${d})
-
-			file(GLOB D_SRC RELATIVE ${PROJECT_SOURCE_DIR}/examples/${d}/
-					${PROJECT_SOURCE_DIR}/examples/${d}/*.cpp)
-			foreach(f ${D_SRC})
-				string(REPLACE "main" "" n ${f})
-				string(REPLACE ".cpp" "" n ${n})
-
-				add_executable(${d}${n} ${PROJECT_SOURCE_DIR}/examples/${d}/${f})
-				set_target_properties(${d}${n} PROPERTIES FOLDER "Examples")
-				target_link_libraries(${d}${n} ${PROJECT_NAME})
-			endforeach()
-		endif()
-	endforeach()
 endif()

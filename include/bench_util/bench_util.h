@@ -120,8 +120,9 @@ struct suite {
 		_title = message;
 	}
 
-	template <class Func>
-	void benchmark(const char* message, Func&& func, size_t num_runs = 1) {
+	template <class Func, class InBetweenFunc>
+	void benchmark(const char* message, Func func, size_t num_runs,
+			InBetweenFunc inbetween_func) {
 		if (num_runs == 0) {
 			return;
 		}
@@ -137,10 +138,17 @@ struct suite {
 			_end_time = std::chrono::high_resolution_clock::now();
 
 			elapsed_time += _end_time - _start_time;
+
+			inbetween_func();
 		}
 
 		_results.push_back(
 				{ message, elapsed_time.count() / double(num_runs) });
+	}
+
+	template <class Func>
+	void benchmark(const char* message, Func func, size_t num_runs = 1) {
+		benchmark(message, func, num_runs, []() {});
 	}
 
 	void print(FILE* stream = stdout) {
