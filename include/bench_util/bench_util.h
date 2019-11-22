@@ -40,7 +40,7 @@
 #endif
 
 #if BENCH_SHUTUP
-#define BENCH_PRINT(...)
+#define BENCH_PRINT_STREAM(...)
 #else
 #define BENCH_PRINT_STREAM(stream, format, ...) \
 	fprintf(stream, "" format "", ##__VA_ARGS__)
@@ -175,7 +175,7 @@ struct suite {
 			BENCH_PRINT_STREAM(stream, "%s%*fs        %fx\n", p.message,
 					70 - int(strlen(p.message)), p.time, ratio);
 		}
-		BENCH_PRINT_STREAM(stream, "\n");
+		BENCH_PRINT_STREAM(stream, "%s", "\n");
 	}
 
 	void clear() {
@@ -192,4 +192,4 @@ private:
 	const char* _title{ nullptr };
 	std::vector<pair> _results;
 };
-}; // namespace bench
+} // namespace bench
