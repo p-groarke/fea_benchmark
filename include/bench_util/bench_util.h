@@ -162,13 +162,15 @@ struct suite {
 					"##");
 		}
 
-		if (_results.size() < 2)
+		if (_results.empty())
 			return;
 
+		if (_results.size() > 1) {
 		std::sort(_results.begin(), _results.end(),
 				[](const pair& lhs, const pair& rhs) {
 					return lhs.time > rhs.time;
 				});
+		}
 
 		for (const pair& p : _results) {
 			double ratio = _results.front().time / p.time;

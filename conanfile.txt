@@ -8,4 +8,5 @@ cmake_multi
 
 [imports]
 bin, *.pdb -> ./bin
+bin, *.pdb -> ./lib
 bin, *.dll -> ./bin
