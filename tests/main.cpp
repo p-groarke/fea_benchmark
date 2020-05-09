@@ -1,4 +1,4 @@
-#include <bench_util/bench_util.h>
+﻿#include <bench_util/bench_util.h>
 #include <chrono>
 #include <cstdio>
 #include <gtest/gtest.h>
@@ -18,28 +18,36 @@ TEST(bench_util, basics) {
 	suite.clear();
 
 	suite.title("suite averages");
-	suite.benchmark(
-			"test1 blee", []() { std::this_thread::sleep_for(0.2s); }, 2);
-	suite.benchmark(
-			"test2 blee", []() { std::this_thread::sleep_for(0.1s); }, 4);
-	suite.benchmark(
-			"test2 blee", []() { std::this_thread::sleep_for(0.05s); }, 10);
+	suite.average(2);
+	suite.benchmark("test1 blee", []() { std::this_thread::sleep_for(0.2s); });
+
+	suite.average(4);
+	suite.benchmark("test2 blee", []() { std::this_thread::sleep_for(0.1s); });
+
+	suite.average(10);
+	suite.benchmark("test2 blee", []() { std::this_thread::sleep_for(0.05s); });
 	suite.print();
 	suite.clear();
 
 	size_t in_between = 0;
 	suite.title("suite averages in-between");
 	suite.benchmark(
-			"test1 blee", []() { std::this_thread::sleep_for(0.2s); }, 1,
+			"test1 blee", []() { std::this_thread::sleep_for(0.2s); },
 			[&]() { ++in_between; });
+
+	suite.average(2);
 	suite.benchmark(
-			"test1 blee", []() { std::this_thread::sleep_for(0.2s); }, 2,
+			"test1 blee", []() { std::this_thread::sleep_for(0.2s); },
 			[&]() { ++in_between; });
+
+	suite.average(4);
 	suite.benchmark(
-			"test2 blee", []() { std::this_thread::sleep_for(0.1s); }, 4,
+			"test2 blee", []() { std::this_thread::sleep_for(0.1s); },
 			[&]() { ++in_between; });
+
+	suite.average(10);
 	suite.benchmark(
-			"test2 blee", []() { std::this_thread::sleep_for(0.05s); }, 10,
+			"test2 blee", []() { std::this_thread::sleep_for(0.05s); },
 			[&]() { ++in_between; });
 
 	EXPECT_EQ(in_between, 17);
