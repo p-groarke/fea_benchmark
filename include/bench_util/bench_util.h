@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright (c) 2019, Philippe Groarke <philippe.groarke@gmail.com>.
  * All rights reserved.
  *
@@ -120,16 +120,26 @@ struct suite {
 		_title = message;
 	}
 
-	template <class Func, class InBetweenFunc>
-	void benchmark(const char* message, Func func, size_t num_runs,
-			InBetweenFunc inbetween_func) {
+	void average(size_t num_runs) {
 		if (num_runs == 0) {
 			return;
 		}
+		_num_average = num_runs;
+	}
+
+	// Run a benchmark on func.
+	// If averaging was set, will average the times.
+	// Pass in message (name of the benchmark).
+	// Pass in a function that will be executed in between runs
+	// (useful when averaging to reset things). This function isn't measured.
+	// It is executed after each call to func.
+	template <class Func, class InBetweenFunc>
+	void benchmark(
+			const char* message, Func func, InBetweenFunc inbetween_func) {
 
 		std::chrono::duration<double> elapsed_time = std::chrono::seconds(0);
 
-		for (size_t i = 0; i < num_runs; ++i) {
+		for (size_t i = 0; i < _num_average; ++i) {
 			std::chrono::time_point<std::chrono::high_resolution_clock>
 					_start_time, _end_time;
 
@@ -143,12 +153,12 @@ struct suite {
 		}
 
 		_results.push_back(
-				{ message, elapsed_time.count() / double(num_runs) });
+				{ message, elapsed_time.count() / double(_num_average) });
 	}
 
 	template <class Func>
-	void benchmark(const char* message, Func func, size_t num_runs = 1) {
-		benchmark(message, func, num_runs, []() {});
+	void benchmark(const char* message, Func func) {
+		benchmark(message, func, []() {});
 	}
 
 	void print(FILE* stream = stdout) {
@@ -166,10 +176,10 @@ struct suite {
 			return;
 
 		if (_results.size() > 1) {
-		std::sort(_results.begin(), _results.end(),
-				[](const pair& lhs, const pair& rhs) {
-					return lhs.time > rhs.time;
-				});
+			std::sort(_results.begin(), _results.end(),
+					[](const pair& lhs, const pair& rhs) {
+						return lhs.time > rhs.time;
+					});
 		}
 
 		for (const pair& p : _results) {
@@ -182,6 +192,7 @@ struct suite {
 
 	void clear() {
 		_title = nullptr;
+		_num_average = 1;
 		_results.clear();
 	}
 
@@ -192,6 +203,7 @@ private:
 	};
 
 	const char* _title{ nullptr };
+	size_t _num_average = 1;
 	std::vector<pair> _results;
 };
 } // namespace bench
