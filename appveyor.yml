@@ -1,27 +1,45 @@
 image:
+  - Visual Studio 2019
   - Visual Studio 2017
 platform:
   - x64
+  - Win32
 configuration:
   - Debug
   - Release
-clone_folder: c:\projects\string_algorithm
-before_build:
-  - cmd: cd c:\projects\string_algorithm
-  - cmd: mkdir build
-  - cmd: cd build
-  - cmd: ..\conan.bat
-  - cmd: cmake .. -A x64 -DBUILD_TESTING=On
-build:
-  project: c:\projects\string_algorithm\build\string_algorithm.sln
-  parallel: true
+clone_folder: c:\projects\bench_util
 install:
   - cmd: set PATH=%PATH%;%PYTHON%/Scripts/
   - cmd: pip.exe install conan
   - cmd: cd ..
   - cmd: conan user
   - cmd: conan --version
-  - cmd: conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-  - cmd: cd c:\projects\string_algorithm
+  - cmd: conan remote add bincrafters https://api.bintray.com/conan/conan/conan-center
+  - cmd: conan profile new default --detect
+  - cmd: cd c:\projects\bench_util
+build:
+  project: c:\projects\bench_util\build\bench_util.sln
+  parallel: true
 test_script:
-  - cmd: c:\projects\string_algorithm\build\bin\string_algorithm_tests.exe
+  - cmd: c:\projects\bench_util\build\bin\bench_util_tests.exe
+for:
+  -
+    matrix:
+      only:
+        - platform: x64
+    before_build:
+      - cmd: conan profile update settings.arch="x86_64" default
+      - cmd: cd c:\projects\bench_util
+      - cmd: mkdir build
+      - cmd: cd build
+      - cmd: cmake .. -A %PLATFORM% -DBUILD_TESTING=On
+  -
+    matrix:
+      only:
+        - platform: Win32
+    before_build:
+      - cmd: conan profile update settings.arch="x86" default
+      - cmd: cd c:\projects\bench_util
+      - cmd: mkdir build
+      - cmd: cd build
+      - cmd: cmake .. -A %PLATFORM% -DBUILD_TESTING=On
