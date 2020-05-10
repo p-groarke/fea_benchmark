@@ -50,7 +50,7 @@ TEST(bench_util, basics) {
 			"test2 blee", []() { std::this_thread::sleep_for(0.05s); },
 			[&]() { ++in_between; });
 
-	EXPECT_EQ(in_between, 17);
+	EXPECT_EQ(in_between, 17u);
 	suite.print();
 	suite.clear();
 }
