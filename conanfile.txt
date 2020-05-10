@@ -1,10 +1,11 @@
 [requires]
-gtest/1.8.1@bincrafters/stable
+gtest/1.10.0@_/_
 
 [generators]
-cmake_multi
+cmake_find_package_multi
 
 [options]
+gtest:build_gmock=False
 
 [imports]
 bin, *.pdb -> ./bin

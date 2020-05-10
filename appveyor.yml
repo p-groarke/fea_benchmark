@@ -32,7 +32,7 @@ for:
       - cmd: cd c:\projects\bench_util
       - cmd: mkdir build
       - cmd: cd build
-      - cmd: cmake .. -A %PLATFORM% -DBUILD_TESTING=On
+      - cmd: cmake .. -A %PLATFORM% -DBENCHUTIL_TESTS=On
   -
     matrix:
       only:
@@ -42,4 +42,4 @@ for:
       - cmd: cd c:\projects\bench_util
       - cmd: mkdir build
       - cmd: cd build
-      - cmd: cmake .. -A %PLATFORM% -DBUILD_TESTING=On
+      - cmd: cmake .. -A %PLATFORM% -DBENCHUTIL_TESTS=On
