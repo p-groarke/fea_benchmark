@@ -33,6 +33,7 @@
 #include <chrono>
 #include <cstdio>
 #include <cstring>
+#include <thread>
 #include <vector>
 
 #ifdef _MSC_VER
@@ -140,6 +141,8 @@ struct suite {
 		std::chrono::duration<double> elapsed_time = std::chrono::seconds(0);
 
 		for (size_t i = 0; i < _num_average; ++i) {
+			std::this_thread::sleep_for(_sleep_between);
+
 			std::chrono::time_point<std::chrono::high_resolution_clock>
 					_start_time, _end_time;
 
@@ -151,6 +154,8 @@ struct suite {
 
 			inbetween_func();
 		}
+
+		std::this_thread::sleep_for(_sleep_between);
 
 		_results.push_back(
 				{ message, elapsed_time.count() / double(_num_average) });
@@ -196,6 +201,11 @@ struct suite {
 		_results.clear();
 	}
 
+	// Useful when profiling. Sleeps in between runs of the benchmarks.
+	void sleep_between(std::chrono::seconds seconds) {
+		_sleep_between = seconds;
+	}
+
 private:
 	struct pair {
 		const char* message{ nullptr };
@@ -204,6 +214,7 @@ private:
 
 	const char* _title{ nullptr };
 	size_t _num_average = 1;
+	std::chrono::seconds _sleep_between{ 0 };
 	std::vector<pair> _results;
 };
 } // namespace bench
