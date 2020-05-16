@@ -139,10 +139,9 @@ struct suite {
 			const char* message, Func func, InBetweenFunc inbetween_func) {
 
 		std::chrono::duration<double> elapsed_time = std::chrono::seconds(0);
+		std::this_thread::sleep_for(_sleep_between);
 
 		for (size_t i = 0; i < _num_average; ++i) {
-			std::this_thread::sleep_for(_sleep_between);
-
 			std::chrono::time_point<std::chrono::high_resolution_clock>
 					_start_time, _end_time;
 
@@ -155,8 +154,6 @@ struct suite {
 			inbetween_func();
 		}
 
-		std::this_thread::sleep_for(_sleep_between);
-
 		_results.push_back(
 				{ message, elapsed_time.count() / double(_num_average) });
 	}
@@ -167,6 +164,8 @@ struct suite {
 	}
 
 	void print(FILE* stream = stdout) {
+		std::this_thread::sleep_for(_sleep_between);
+
 		if (_title != nullptr) {
 			BENCH_PRINT_STREAM(stream, "%.*s\n", (int)strlen(_title),
 					"##########################################################"
@@ -203,7 +202,11 @@ struct suite {
 
 	// Useful when profiling. Sleeps in between runs of the benchmarks.
 	void sleep_between(std::chrono::seconds seconds) {
-		_sleep_between = seconds;
+		_sleep_between = std::chrono::duration_cast<std::chrono::milliseconds>(
+				seconds);
+	}
+	void sleep_between(std::chrono::milliseconds milli_seconds) {
+		_sleep_between = milli_seconds;
 	}
 
 private:
@@ -214,7 +217,7 @@ private:
 
 	const char* _title{ nullptr };
 	size_t _num_average = 1;
-	std::chrono::seconds _sleep_between{ 0 };
+	std::chrono::milliseconds _sleep_between{ 0 };
 	std::vector<pair> _results;
 };
 } // namespace bench
