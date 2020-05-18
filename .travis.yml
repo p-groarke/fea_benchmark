@@ -93,7 +93,7 @@ matrix:
 
 script:
   - mkdir build && cd build
-  - cmake .. -DBENCHUTIL_TESTS=On -DCMAKE_BUILD_TYPE=$CONFIG
+  - cmake .. -DBENCH_UTIL_TESTS=On -DCMAKE_BUILD_TYPE=$CONFIG
   - cmake --build . --config $CONFIG
   - ./bin/bench_util_tests
 

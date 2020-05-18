@@ -83,8 +83,8 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}" DESTINAT
 
 
 # Tests
-option(BENCHUTIL_TESTS "Build and run tests." On)
-if (${BENCHUTIL_TESTS})
+option(BENCH_UTIL_TESTS "Build and run tests." On)
+if (${BENCH_UTIL_TESTS})
 	enable_testing()
 	
 	find_package(GTest CONFIG REQUIRED)
