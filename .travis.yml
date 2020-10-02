@@ -93,9 +93,9 @@ matrix:
 
 script:
   - mkdir build && cd build
-  - cmake .. -DBENCH_UTIL_TESTS=On -DCMAKE_BUILD_TYPE=$CONFIG
+  - cmake .. -DFEA_BENCHMARK_TESTS=On -DCMAKE_BUILD_TYPE=$CONFIG
   - cmake --build . --config $CONFIG
-  - ./bin/bench_util_tests
+  - ./bin/fea_benchmark_tests
 
 notifications:
   email:

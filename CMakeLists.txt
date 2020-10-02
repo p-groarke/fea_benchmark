@@ -64,7 +64,7 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 
 set_compile_options(${PROJECT_NAME} INTERFACE)
 
-option(BENCH_SHUTUP "Disable bench_util console output" Off)
+option(BENCH_SHUTUP "Disable fea_benchmark console output" Off)
 if (BENCH_SHUTUP)
 	target_compile_definitions(${PROJECT_NAME} INTERFACE BENCH_SHUTUP=1)
 endif()
@@ -83,8 +83,8 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME}" DESTINAT
 
 
 # Tests
-option(BENCH_UTIL_TESTS "Build and run tests." On)
-if (${BENCH_UTIL_TESTS})
+option(FEA_BENCHMARK_TESTS "Build and run tests." On)
+if (${FEA_BENCHMARK_TESTS})
 	enable_testing()
 	
 	find_package(GTest CONFIG REQUIRED)
