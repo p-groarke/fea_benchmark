@@ -1,4 +1,4 @@
-# cpp_bench_util
+# fea_benchmark
 [![Build Status](https://travis-ci.org/p-groarke/bench_util.svg?branch=master)](https://travis-ci.org/p-groarke/bench_util)
 [![Build status](https://ci.appveyor.com/api/projects/status/gvq6hxe87w27ualw/branch/master?svg=true)](https://ci.appveyor.com/project/p-groarke/bench-util/branch/master)
 

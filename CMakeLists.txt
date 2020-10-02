@@ -1,8 +1,8 @@
 include(${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.conan.txt)
 
 cmake_minimum_required(VERSION 3.5)
-project(bench_util CXX)
-set(${PROJECT_NAME}_VERSION 2.2.0)
+project(fea_benchmark CXX)
+set(${PROJECT_NAME}_VERSION 2.3.0)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -50,7 +50,7 @@ function(set_compile_options REQUIRED_ARG EXPOSURE)
 endfunction()
 
 
-file(GLOB HEADER_FILES ${PROJECT_SOURCE_DIR}/include/bench_util/bench_util.h)
+file(GLOB_RECURSE HEADER_FILES "${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/*.hpp")
 
 add_library(${PROJECT_NAME} INTERFACE)
 target_sources(${PROJECT_NAME} INTERFACE

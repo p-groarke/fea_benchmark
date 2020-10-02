@@ -1,6 +1,6 @@
-﻿#include <bench_util/bench_util.h>
-#include <chrono>
+﻿#include <chrono>
 #include <cstdio>
+#include <fea_benchmark/fea_benchmark.hpp>
 #include <gtest/gtest.h>
 #include <thread>
 
@@ -8,8 +8,8 @@ using namespace std::chrono_literals;
 
 namespace {
 
-TEST(bench_util, basics) {
-	bench::suite suite;
+TEST(fea_benchmark, basics) {
+	fea::bench::suite suite;
 	suite.title("suite test");
 	suite.benchmark("test1 blee", []() { std::this_thread::sleep_for(0.1s); });
 	suite.benchmark("test2 blee", []() { std::this_thread::sleep_for(0.2s); });

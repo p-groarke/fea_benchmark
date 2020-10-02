@@ -1,5 +1,5 @@
 ﻿/**
- * Copyright (c) 2019, Philippe Groarke <philippe.groarke@gmail.com>.
+ * Copyright (c) 2020, Philippe Groarke <philippe.groarke@gmail.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,6 +47,7 @@
 	fprintf(stream, "" format "", ##__VA_ARGS__)
 #endif
 
+namespace fea {
 namespace bench {
 // Compiler freaks out with macro-only usage.
 template <typename T>
@@ -221,3 +222,4 @@ private:
 	std::vector<pair> _results;
 };
 } // namespace bench
+} // namespace fea
